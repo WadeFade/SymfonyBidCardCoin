@@ -1,0 +1,152 @@
+<?php
+
+namespace App\Entity;
+
+use App\Repository\OrdreAchatRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity(repositoryClass=OrdreAchatRepository::class)
+ */
+class OrdreAchat
+{
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $idOrdreAchat;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $prixMax;
+
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    private $dateOrdreAchat;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=personne::class, inversedBy="ordreAchats")
+     */
+    private $orderer;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=lot::class, inversedBy="ordreAchats")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $lot;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Enchere::class, mappedBy="ordreAchat")
+     */
+    private $encheres;
+
+    public function __construct()
+    {
+        $this->encheres = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getIdOrdreAchat(): ?string
+    {
+        return $this->idOrdreAchat;
+    }
+
+    public function setIdOrdreAchat(string $idOrdreAchat): self
+    {
+        $this->idOrdreAchat = $idOrdreAchat;
+
+        return $this;
+    }
+
+    public function getPrixMax(): ?float
+    {
+        return $this->prixMax;
+    }
+
+    public function setPrixMax(float $prixMax): self
+    {
+        $this->prixMax = $prixMax;
+
+        return $this;
+    }
+
+    public function getDateOrdreAchat(): ?\DateTimeImmutable
+    {
+        return $this->dateOrdreAchat;
+    }
+
+    public function setDateOrdreAchat(\DateTimeImmutable $dateOrdreAchat): self
+    {
+        $this->dateOrdreAchat = $dateOrdreAchat;
+
+        return $this;
+    }
+
+    public function getOrderer(): ?personne
+    {
+        return $this->orderer;
+    }
+
+    public function setOrderer(?personne $orderer): self
+    {
+        $this->orderer = $orderer;
+
+        return $this;
+    }
+
+    public function getLot(): ?lot
+    {
+        return $this->lot;
+    }
+
+    public function setLot(?lot $lot): self
+    {
+        $this->lot = $lot;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Enchere[]
+     */
+    public function getEncheres(): Collection
+    {
+        return $this->encheres;
+    }
+
+    public function addEnchere(Enchere $enchere): self
+    {
+        if (!$this->encheres->contains($enchere)) {
+            $this->encheres[] = $enchere;
+            $enchere->setOrdreAchat($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEnchere(Enchere $enchere): self
+    {
+        if ($this->encheres->removeElement($enchere)) {
+            // set the owning side to null (unless already changed)
+            if ($enchere->getOrdreAchat() === $this) {
+                $enchere->setOrdreAchat(null);
+            }
+        }
+
+        return $this;
+    }
+}

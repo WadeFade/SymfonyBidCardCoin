@@ -54,9 +54,15 @@ class Adresse
      */
     private $personnes;
 
+    /**
+     * @ORM\OneToMany(targetEntity=SalleEnchere::class, mappedBy="adresse")
+     */
+    private $salleEncheres;
+
     public function __construct()
     {
         $this->personnes = new ArrayCollection();
+        $this->salleEncheres = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -158,6 +164,36 @@ class Adresse
     {
         if ($this->personnes->removeElement($personne)) {
             $personne->removeAdresse($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SalleEnchere[]
+     */
+    public function getSalleEncheres(): Collection
+    {
+        return $this->salleEncheres;
+    }
+
+    public function addSalleEnchere(SalleEnchere $salleEnchere): self
+    {
+        if (!$this->salleEncheres->contains($salleEnchere)) {
+            $this->salleEncheres[] = $salleEnchere;
+            $salleEnchere->setAdresse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSalleEnchere(SalleEnchere $salleEnchere): self
+    {
+        if ($this->salleEncheres->removeElement($salleEnchere)) {
+            // set the owning side to null (unless already changed)
+            if ($salleEnchere->getAdresse() === $this) {
+                $salleEnchere->setAdresse(null);
+            }
         }
 
         return $this;

@@ -84,11 +84,35 @@ class Personne
      */
     private $produitsAchete;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Estimation::class, mappedBy="commissaire")
+     */
+    private $estimations;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Enchere::class, mappedBy="commissaire")
+     */
+    private $encheresAsCommissaire;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Enchere::class, mappedBy="encherisseur")
+     */
+    private $encheresAsEncherisseur;
+
+    /**
+     * @ORM\OneToMany(targetEntity=OrdreAchat::class, mappedBy="orderer")
+     */
+    private $ordreAchats;
+
     public function __construct()
     {
         $this->adresse = new ArrayCollection();
         $this->produits = new ArrayCollection();
         $this->produitsAchete = new ArrayCollection();
+        $this->estimations = new ArrayCollection();
+        $this->encheresAsCommissaire = new ArrayCollection();
+        $this->encheresAsEncherisseur = new ArrayCollection();
+        $this->ordreAchats = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -294,6 +318,126 @@ class Personne
             // set the owning side to null (unless already changed)
             if ($produitsAchete->getAcheteur() === $this) {
                 $produitsAchete->setAcheteur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Estimation[]
+     */
+    public function getEstimations(): Collection
+    {
+        return $this->estimations;
+    }
+
+    public function addEstimation(Estimation $estimation): self
+    {
+        if (!$this->estimations->contains($estimation)) {
+            $this->estimations[] = $estimation;
+            $estimation->setCommissaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEstimation(Estimation $estimation): self
+    {
+        if ($this->estimations->removeElement($estimation)) {
+            // set the owning side to null (unless already changed)
+            if ($estimation->getCommissaire() === $this) {
+                $estimation->setCommissaire(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Enchere[]
+     */
+    public function getEncheresAsCommissaire(): Collection
+    {
+        return $this->encheresAsCommissaire;
+    }
+
+    public function addEncheresAsCommissaire(Enchere $encheresAsCommissaire): self
+    {
+        if (!$this->encheresAsCommissaire->contains($encheresAsCommissaire)) {
+            $this->encheresAsCommissaire[] = $encheresAsCommissaire;
+            $encheresAsCommissaire->setCommissaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEncheresAsCommissaire(Enchere $encheresAsCommissaire): self
+    {
+        if ($this->encheresAsCommissaire->removeElement($encheresAsCommissaire)) {
+            // set the owning side to null (unless already changed)
+            if ($encheresAsCommissaire->getCommissaire() === $this) {
+                $encheresAsCommissaire->setCommissaire(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Enchere[]
+     */
+    public function getEncheresAsEncherisseur(): Collection
+    {
+        return $this->encheresAsEncherisseur;
+    }
+
+    public function addEncheresAsEncherisseur(Enchere $encheresAsEncherisseur): self
+    {
+        if (!$this->encheresAsEncherisseur->contains($encheresAsEncherisseur)) {
+            $this->encheresAsEncherisseur[] = $encheresAsEncherisseur;
+            $encheresAsEncherisseur->setEncherisseur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEncheresAsEncherisseur(Enchere $encheresAsEncherisseur): self
+    {
+        if ($this->encheresAsEncherisseur->removeElement($encheresAsEncherisseur)) {
+            // set the owning side to null (unless already changed)
+            if ($encheresAsEncherisseur->getEncherisseur() === $this) {
+                $encheresAsEncherisseur->setEncherisseur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OrdreAchat[]
+     */
+    public function getOrdreAchats(): Collection
+    {
+        return $this->ordreAchats;
+    }
+
+    public function addOrdreAchat(OrdreAchat $ordreAchat): self
+    {
+        if (!$this->ordreAchats->contains($ordreAchat)) {
+            $this->ordreAchats[] = $ordreAchat;
+            $ordreAchat->setOrderer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrdreAchat(OrdreAchat $ordreAchat): self
+    {
+        if ($this->ordreAchats->removeElement($ordreAchat)) {
+            // set the owning side to null (unless already changed)
+            if ($ordreAchat->getOrderer() === $this) {
+                $ordreAchat->setOrderer(null);
             }
         }
 

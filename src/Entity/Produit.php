@@ -90,9 +90,15 @@ class Produit
      */
     private $acheteur;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Estimation::class, mappedBy="produit")
+     */
+    private $estimations;
+
     public function __construct()
     {
         $this->photos = new ArrayCollection();
+        $this->estimations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -282,6 +288,36 @@ class Produit
     public function setAcheteur(?Personne $acheteur): self
     {
         $this->acheteur = $acheteur;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Estimation[]
+     */
+    public function getEstimations(): Collection
+    {
+        return $this->estimations;
+    }
+
+    public function addEstimation(Estimation $estimation): self
+    {
+        if (!$this->estimations->contains($estimation)) {
+            $this->estimations[] = $estimation;
+            $estimation->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEstimation(Estimation $estimation): self
+    {
+        if ($this->estimations->removeElement($estimation)) {
+            // set the owning side to null (unless already changed)
+            if ($estimation->getProduit() === $this) {
+                $estimation->setProduit(null);
+            }
+        }
 
         return $this;
     }

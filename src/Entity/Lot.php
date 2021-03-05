@@ -39,9 +39,21 @@ class Lot
      */
     private $produits;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Enchere::class, mappedBy="lot")
+     */
+    private $encheres;
+
+    /**
+     * @ORM\OneToMany(targetEntity=OrdreAchat::class, mappedBy="lot")
+     */
+    private $ordreAchats;
+
     public function __construct()
     {
         $this->produits = new ArrayCollection();
+        $this->encheres = new ArrayCollection();
+        $this->ordreAchats = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -109,6 +121,66 @@ class Lot
             // set the owning side to null (unless already changed)
             if ($produit->getLot() === $this) {
                 $produit->setLot(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Enchere[]
+     */
+    public function getEncheres(): Collection
+    {
+        return $this->encheres;
+    }
+
+    public function addEnchere(Enchere $enchere): self
+    {
+        if (!$this->encheres->contains($enchere)) {
+            $this->encheres[] = $enchere;
+            $enchere->setLot($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEnchere(Enchere $enchere): self
+    {
+        if ($this->encheres->removeElement($enchere)) {
+            // set the owning side to null (unless already changed)
+            if ($enchere->getLot() === $this) {
+                $enchere->setLot(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OrdreAchat[]
+     */
+    public function getOrdreAchats(): Collection
+    {
+        return $this->ordreAchats;
+    }
+
+    public function addOrdreAchat(OrdreAchat $ordreAchat): self
+    {
+        if (!$this->ordreAchats->contains($ordreAchat)) {
+            $this->ordreAchats[] = $ordreAchat;
+            $ordreAchat->setLot($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrdreAchat(OrdreAchat $ordreAchat): self
+    {
+        if ($this->ordreAchats->removeElement($ordreAchat)) {
+            // set the owning side to null (unless already changed)
+            if ($ordreAchat->getLot() === $this) {
+                $ordreAchat->setLot(null);
             }
         }
 
