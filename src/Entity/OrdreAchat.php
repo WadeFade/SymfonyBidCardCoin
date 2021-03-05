@@ -40,7 +40,7 @@ class OrdreAchat
     private $orderer;
 
     /**
-     * @ORM\ManyToOne(targetEntity=lot::class, inversedBy="ordreAchats")
+     * @ORM\ManyToOne(targetEntity=Lot::class, inversedBy="ordreAchats")
      * @ORM\JoinColumn(nullable=false)
      */
     private $lot;

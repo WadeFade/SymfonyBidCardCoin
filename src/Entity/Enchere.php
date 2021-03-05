@@ -38,7 +38,7 @@ class Enchere
     private $estAdjuge;
 
     /**
-     * @ORM\ManyToOne(targetEntity=lot::class, inversedBy="encheres")
+     * @ORM\ManyToOne(targetEntity=Lot::class, inversedBy="encheres")
      * @ORM\JoinColumn(nullable=false)
      */
     private $lot;
@@ -55,7 +55,7 @@ class Enchere
     private $encherisseur;
 
     /**
-     * @ORM\ManyToOne(targetEntity=ordreAchat::class, inversedBy="encheres")
+     * @ORM\ManyToOne(targetEntity=OrdreAchat::class, inversedBy="encheres")
      */
     private $ordreAchat;
 
@@ -154,12 +154,12 @@ class Enchere
         return $this;
     }
 
-    public function getOrdreAchat(): ?ordreAchat
+    public function getOrdreAchat(): ?OrdreAchat
     {
         return $this->ordreAchat;
     }
 
-    public function setOrdreAchat(?ordreAchat $ordreAchat): self
+    public function setOrdreAchat(?OrdreAchat $ordreAchat): self
     {
         $this->ordreAchat = $ordreAchat;
 
