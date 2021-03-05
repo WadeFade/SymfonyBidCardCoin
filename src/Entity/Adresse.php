@@ -59,10 +59,16 @@ class Adresse
      */
     private $salleEncheres;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Stockage::class, mappedBy="adresse")
+     */
+    private $stockages;
+
     public function __construct()
     {
         $this->personnes = new ArrayCollection();
         $this->salleEncheres = new ArrayCollection();
+        $this->stockages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -193,6 +199,36 @@ class Adresse
             // set the owning side to null (unless already changed)
             if ($salleEnchere->getAdresse() === $this) {
                 $salleEnchere->setAdresse(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Stockage[]
+     */
+    public function getStockages(): Collection
+    {
+        return $this->stockages;
+    }
+
+    public function addStockage(Stockage $stockage): self
+    {
+        if (!$this->stockages->contains($stockage)) {
+            $this->stockages[] = $stockage;
+            $stockage->setAdresse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStockage(Stockage $stockage): self
+    {
+        if ($this->stockages->removeElement($stockage)) {
+            // set the owning side to null (unless already changed)
+            if ($stockage->getAdresse() === $this) {
+                $stockage->setAdresse(null);
             }
         }
 

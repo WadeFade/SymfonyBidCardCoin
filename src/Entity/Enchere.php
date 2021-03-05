@@ -118,12 +118,12 @@ class Enchere
         return $this;
     }
 
-    public function getLot(): ?lot
+    public function getLot(): ?Lot
     {
         return $this->lot;
     }
 
-    public function setLot(?lot $lot): self
+    public function setLot(?Lot $lot): self
     {
         $this->lot = $lot;
 

@@ -95,6 +95,11 @@ class Produit
      */
     private $estimations;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=stockage::class, inversedBy="produits")
+     */
+    private $stockage;
+
     public function __construct()
     {
         $this->photos = new ArrayCollection();
@@ -318,6 +323,18 @@ class Produit
                 $estimation->setProduit(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStockage(): ?stockage
+    {
+        return $this->stockage;
+    }
+
+    public function setStockage(?stockage $stockage): self
+    {
+        $this->stockage = $stockage;
 
         return $this;
     }
