@@ -65,6 +65,11 @@ class Enchere
      */
     private $salleVente;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Paiement::class, mappedBy="enchere", cascade={"persist", "remove"})
+     */
+    private $paiement;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -174,6 +179,23 @@ class Enchere
     public function setSalleVente(?salleEnchere $salleVente): self
     {
         $this->salleVente = $salleVente;
+
+        return $this;
+    }
+
+    public function getPaiement(): ?Paiement
+    {
+        return $this->paiement;
+    }
+
+    public function setPaiement(Paiement $paiement): self
+    {
+        // set the owning side of the relation if necessary
+        if ($paiement->getEnchere() !== $this) {
+            $paiement->setEnchere($this);
+        }
+
+        $this->paiement = $paiement;
 
         return $this;
     }
