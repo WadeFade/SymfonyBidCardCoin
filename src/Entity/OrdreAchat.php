@@ -35,11 +35,6 @@ class OrdreAchat
     private $dateOrdreAchat;
 
     /**
-     * @ORM\ManyToOne(targetEntity=personne::class, inversedBy="ordreAchats")
-     */
-    private $orderer;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Lot::class, inversedBy="ordreAchats")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -49,6 +44,12 @@ class OrdreAchat
      * @ORM\OneToMany(targetEntity=Enchere::class, mappedBy="ordreAchat")
      */
     private $encheres;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="ordreAchats")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $orderer;
 
     public function __construct()
     {
@@ -96,18 +97,6 @@ class OrdreAchat
         return $this;
     }
 
-    public function getOrderer(): ?personne
-    {
-        return $this->orderer;
-    }
-
-    public function setOrderer(?personne $orderer): self
-    {
-        $this->orderer = $orderer;
-
-        return $this;
-    }
-
     public function getLot(): ?Lot
     {
         return $this->lot;
@@ -146,6 +135,18 @@ class OrdreAchat
                 $enchere->setOrdreAchat(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOrderer(): ?User
+    {
+        return $this->orderer;
+    }
+
+    public function setOrderer(?User $orderer): self
+    {
+        $this->orderer = $orderer;
 
         return $this;
     }

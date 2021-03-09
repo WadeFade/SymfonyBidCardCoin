@@ -65,12 +65,6 @@ class Produit
     private $nbInvendu;
 
     /**
-     * @ORM\ManyToOne(targetEntity=personne::class, inversedBy="produits")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $vendeur;
-
-    /**
      * @ORM\OneToMany(targetEntity=Photo::class, mappedBy="produit")
      */
     private $photos;
@@ -86,11 +80,6 @@ class Produit
     private $lot;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Personne::class, inversedBy="produitsAchete")
-     */
-    private $acheteur;
-
-    /**
      * @ORM\OneToMany(targetEntity=Estimation::class, mappedBy="produit")
      */
     private $estimations;
@@ -99,6 +88,17 @@ class Produit
      * @ORM\ManyToOne(targetEntity=stockage::class, inversedBy="produits")
      */
     private $stockage;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="produitsAVendre")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $vendeur;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="produitsAchete")
+     */
+    private $acquereur;
 
     public function __construct()
     {
@@ -219,18 +219,6 @@ class Produit
         return $this;
     }
 
-    public function getVendeur(): ?personne
-    {
-        return $this->vendeur;
-    }
-
-    public function setVendeur(?personne $vendeur): self
-    {
-        $this->vendeur = $vendeur;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Photo[]
      */
@@ -285,18 +273,6 @@ class Produit
         return $this;
     }
 
-    public function getAcheteur(): ?Personne
-    {
-        return $this->acheteur;
-    }
-
-    public function setAcheteur(?Personne $acheteur): self
-    {
-        $this->acheteur = $acheteur;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Estimation[]
      */
@@ -335,6 +311,30 @@ class Produit
     public function setStockage(?stockage $stockage): self
     {
         $this->stockage = $stockage;
+
+        return $this;
+    }
+
+    public function getVendeur(): ?User
+    {
+        return $this->vendeur;
+    }
+
+    public function setVendeur(?User $vendeur): self
+    {
+        $this->vendeur = $vendeur;
+
+        return $this;
+    }
+
+    public function getAcquereur(): ?User
+    {
+        return $this->acquereur;
+    }
+
+    public function setAcquereur(?User $acquereur): self
+    {
+        $this->acquereur = $acquereur;
 
         return $this;
     }

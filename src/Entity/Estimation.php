@@ -27,13 +27,7 @@ class Estimation
      * @ORM\JoinColumn(nullable=false)
      */
     private $produit;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=personne::class, inversedBy="estimations")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $commissaire;
-
+    
     /**
      * @ORM\Column(type="float")
      */
@@ -43,6 +37,12 @@ class Estimation
      * @ORM\Column(type="datetime_immutable")
      */
     private $dateEstimation;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="estimations")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $commissaire;
 
     public function getId(): ?int
     {
@@ -73,18 +73,6 @@ class Estimation
         return $this;
     }
 
-    public function getCommissaire(): ?personne
-    {
-        return $this->commissaire;
-    }
-
-    public function setCommissaire(?personne $commissaire): self
-    {
-        $this->commissaire = $commissaire;
-
-        return $this;
-    }
-
     public function getPrixEstimation(): ?float
     {
         return $this->prixEstimation;
@@ -105,6 +93,18 @@ class Estimation
     public function setDateEstimation(\DateTimeImmutable $dateEstimation): self
     {
         $this->dateEstimation = $dateEstimation;
+
+        return $this;
+    }
+
+    public function getCommissaire(): ?User
+    {
+        return $this->commissaire;
+    }
+
+    public function setCommissaire(?User $commissaire): self
+    {
+        $this->commissaire = $commissaire;
 
         return $this;
     }

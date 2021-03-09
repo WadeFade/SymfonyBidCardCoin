@@ -2,15 +2,18 @@
 
 namespace App\Entity;
 
-use App\Repository\PersonneRepository;
+use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity(repositoryClass=PersonneRepository::class)
+ * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
-class Personne
+class User implements UserInterface
 {
     /**
      * @ORM\Id
@@ -20,39 +23,40 @@ class Personne
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $idPersonne;
-
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $nomPersonne;
-
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $prenomPersonne;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $dateNaissance;
-
-    /**
-     * @ORM\Column(type="string", length=45)
-     */
-    private $telephone;
-
-    /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
+
+    /**
+     * @var string The hashed password
+     * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $nom;
+
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $prenom;
+
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    private $dateNaissance;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $telephone;
 
     /**
      * @ORM\Column(type="boolean")
@@ -62,25 +66,20 @@ class Personne
     /**
      * @ORM\Column(type="smallint")
      */
-    private $role;
+    private $modePaiement;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\ManyToMany(targetEntity=Adresse::class, mappedBy="personnes")
      */
-    private $modePaiement;
-//TODO delete les relations pour les transférer sur la table User (table utilisé pour la sécurité).
-    /**
-     * @ORM\ManyToMany(targetEntity=adresse::class, inversedBy="personnes")
-     */
-    private $adresse;
+    private $adresses;
 
     /**
      * @ORM\OneToMany(targetEntity=Produit::class, mappedBy="vendeur")
      */
-    private $produits;
+    private $produitsAVendre;
 
     /**
-     * @ORM\OneToMany(targetEntity=Produit::class, mappedBy="acheteur")
+     * @ORM\OneToMany(targetEntity=Produit::class, mappedBy="acquereur")
      */
     private $produitsAchete;
 
@@ -106,8 +105,8 @@ class Personne
 
     public function __construct()
     {
-        $this->adresse = new ArrayCollection();
-        $this->produits = new ArrayCollection();
+        $this->adresses = new ArrayCollection();
+        $this->produitsAVendre = new ArrayCollection();
         $this->produitsAchete = new ArrayCollection();
         $this->estimations = new ArrayCollection();
         $this->encheresAsCommissaire = new ArrayCollection();
@@ -120,48 +119,112 @@ class Personne
         return $this->id;
     }
 
-    public function getIdPersonne(): ?string
+    public function getEmail(): ?string
     {
-        return $this->idPersonne;
+        return $this->email;
     }
 
-    public function setIdPersonne(string $idPersonne): self
+    public function setEmail(string $email): self
     {
-        $this->idPersonne = $idPersonne;
+        $this->email = $email;
 
         return $this;
     }
 
-    public function getNomPersonne(): ?string
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUsername(): string
     {
-        return $this->nomPersonne;
+        return (string) $this->email;
     }
 
-    public function setNomPersonne(string $nomPersonne): self
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
     {
-        $this->nomPersonne = $nomPersonne;
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
 
         return $this;
     }
 
-    public function getPrenomPersonne(): ?string
+    /**
+     * @see UserInterface
+     */
+    public function getPassword(): string
     {
-        return $this->prenomPersonne;
+        return (string) $this->password;
     }
 
-    public function setPrenomPersonne(string $prenomPersonne): self
+    public function setPassword(string $password): self
     {
-        $this->prenomPersonne = $prenomPersonne;
+        $this->password = $password;
 
         return $this;
     }
 
-    public function getDateNaissance(): ?\DateTimeInterface
+    /**
+     * Returning a salt is only needed, if you are not using a modern
+     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
+     *
+     * @see UserInterface
+     */
+    public function getSalt(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom): self
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    public function getDateNaissance(): ?\DateTimeImmutable
     {
         return $this->dateNaissance;
     }
 
-    public function setDateNaissance(\DateTimeInterface $dateNaissance): self
+    public function setDateNaissance(\DateTimeImmutable $dateNaissance): self
     {
         $this->dateNaissance = $dateNaissance;
 
@@ -180,30 +243,6 @@ class Personne
         return $this;
     }
 
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
-
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
     public function getVerifIdentite(): ?bool
     {
         return $this->verifIdentite;
@@ -212,18 +251,6 @@ class Personne
     public function setVerifIdentite(bool $verifIdentite): self
     {
         $this->verifIdentite = $verifIdentite;
-
-        return $this;
-    }
-
-    public function getRole(): ?int
-    {
-        return $this->role;
-    }
-
-    public function setRole(int $role): self
-    {
-        $this->role = $role;
 
         return $this;
     }
@@ -241,25 +268,28 @@ class Personne
     }
 
     /**
-     * @return Collection|adresse[]
+     * @return Collection|Adresse[]
      */
-    public function getAdresse(): Collection
+    public function getAdresses(): Collection
     {
-        return $this->adresse;
+        return $this->adresses;
     }
 
-    public function addAdresse(adresse $adresse): self
+    public function addAdress(Adresse $adress): self
     {
-        if (!$this->adresse->contains($adresse)) {
-            $this->adresse[] = $adresse;
+        if (!$this->adresses->contains($adress)) {
+            $this->adresses[] = $adress;
+            $adress->addPersonne($this);
         }
 
         return $this;
     }
 
-    public function removeAdresse(adresse $adresse): self
+    public function removeAdress(Adresse $adress): self
     {
-        $this->adresse->removeElement($adresse);
+        if ($this->adresses->removeElement($adress)) {
+            $adress->removePersonne($this);
+        }
 
         return $this;
     }
@@ -267,27 +297,27 @@ class Personne
     /**
      * @return Collection|Produit[]
      */
-    public function getProduits(): Collection
+    public function getProduitsAVendre(): Collection
     {
-        return $this->produits;
+        return $this->produitsAVendre;
     }
 
-    public function addProduit(Produit $produit): self
+    public function addProduitsAVendre(Produit $produitsAVendre): self
     {
-        if (!$this->produits->contains($produit)) {
-            $this->produits[] = $produit;
-            $produit->setVendeur($this);
+        if (!$this->produitsAVendre->contains($produitsAVendre)) {
+            $this->produitsAVendre[] = $produitsAVendre;
+            $produitsAVendre->setVendeur($this);
         }
 
         return $this;
     }
 
-    public function removeProduit(Produit $produit): self
+    public function removeProduitsAVendre(Produit $produitsAVendre): self
     {
-        if ($this->produits->removeElement($produit)) {
+        if ($this->produitsAVendre->removeElement($produitsAVendre)) {
             // set the owning side to null (unless already changed)
-            if ($produit->getVendeur() === $this) {
-                $produit->setVendeur(null);
+            if ($produitsAVendre->getVendeur() === $this) {
+                $produitsAVendre->setVendeur(null);
             }
         }
 
@@ -306,7 +336,7 @@ class Personne
     {
         if (!$this->produitsAchete->contains($produitsAchete)) {
             $this->produitsAchete[] = $produitsAchete;
-            $produitsAchete->setAcheteur($this);
+            $produitsAchete->setAcquereur($this);
         }
 
         return $this;
@@ -316,8 +346,8 @@ class Personne
     {
         if ($this->produitsAchete->removeElement($produitsAchete)) {
             // set the owning side to null (unless already changed)
-            if ($produitsAchete->getAcheteur() === $this) {
-                $produitsAchete->setAcheteur(null);
+            if ($produitsAchete->getAcquereur() === $this) {
+                $produitsAchete->setAcquereur(null);
             }
         }
 

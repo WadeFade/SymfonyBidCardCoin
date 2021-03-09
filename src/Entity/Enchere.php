@@ -44,17 +44,6 @@ class Enchere
     private $lot;
 
     /**
-     * @ORM\ManyToOne(targetEntity=personne::class, inversedBy="encheresAsCommissaire")
-     */
-    private $commissaire;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=personne::class, inversedBy="encheresAsEncherisseur")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $encherisseur;
-
-    /**
      * @ORM\ManyToOne(targetEntity=OrdreAchat::class, inversedBy="encheres")
      */
     private $ordreAchat;
@@ -69,6 +58,18 @@ class Enchere
      * @ORM\OneToOne(targetEntity=Paiement::class, mappedBy="enchere", cascade={"persist", "remove"})
      */
     private $paiement;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="encheresAsCommissaire")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $commissaire;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="encheresAsEncherisseur")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $encherisseur;
 
     public function getId(): ?int
     {
@@ -135,30 +136,6 @@ class Enchere
         return $this;
     }
 
-    public function getCommissaire(): ?personne
-    {
-        return $this->commissaire;
-    }
-
-    public function setCommissaire(?personne $commissaire): self
-    {
-        $this->commissaire = $commissaire;
-
-        return $this;
-    }
-
-    public function getEncherisseur(): ?personne
-    {
-        return $this->encherisseur;
-    }
-
-    public function setEncherisseur(?personne $encherisseur): self
-    {
-        $this->encherisseur = $encherisseur;
-
-        return $this;
-    }
-
     public function getOrdreAchat(): ?OrdreAchat
     {
         return $this->ordreAchat;
@@ -196,6 +173,30 @@ class Enchere
         }
 
         $this->paiement = $paiement;
+
+        return $this;
+    }
+
+    public function getCommissaire(): ?User
+    {
+        return $this->commissaire;
+    }
+
+    public function setCommissaire(?User $commissaire): self
+    {
+        $this->commissaire = $commissaire;
+
+        return $this;
+    }
+
+    public function getEncherisseur(): ?User
+    {
+        return $this->encherisseur;
+    }
+
+    public function setEncherisseur(?User $encherisseur): self
+    {
+        $this->encherisseur = $encherisseur;
 
         return $this;
     }

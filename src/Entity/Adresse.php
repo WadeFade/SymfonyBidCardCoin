@@ -50,11 +50,6 @@ class Adresse
     private $pays;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Personne::class, mappedBy="adresse")
-     */
-    private $personnes;
-
-    /**
      * @ORM\OneToMany(targetEntity=SalleEnchere::class, mappedBy="adresse")
      */
     private $salleEncheres;
@@ -64,11 +59,16 @@ class Adresse
      */
     private $stockages;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="adresses")
+     */
+    private $personnes;
+
     public function __construct()
     {
-        $this->personnes = new ArrayCollection();
         $this->salleEncheres = new ArrayCollection();
         $this->stockages = new ArrayCollection();
+        $this->personnes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -149,33 +149,6 @@ class Adresse
     }
 
     /**
-     * @return Collection|Personne[]
-     */
-    public function getPersonnes(): Collection
-    {
-        return $this->personnes;
-    }
-
-    public function addPersonne(Personne $personne): self
-    {
-        if (!$this->personnes->contains($personne)) {
-            $this->personnes[] = $personne;
-            $personne->addAdresse($this);
-        }
-
-        return $this;
-    }
-
-    public function removePersonne(Personne $personne): self
-    {
-        if ($this->personnes->removeElement($personne)) {
-            $personne->removeAdresse($this);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|SalleEnchere[]
      */
     public function getSalleEncheres(): Collection
@@ -231,6 +204,30 @@ class Adresse
                 $stockage->setAdresse(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getPersonnes(): Collection
+    {
+        return $this->personnes;
+    }
+
+    public function addPersonne(User $personne): self
+    {
+        if (!$this->personnes->contains($personne)) {
+            $this->personnes[] = $personne;
+        }
+
+        return $this;
+    }
+
+    public function removePersonne(User $personne): self
+    {
+        $this->personnes->removeElement($personne);
 
         return $this;
     }
