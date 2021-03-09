@@ -18,11 +18,6 @@ class Photo
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $idPhoto;
-
-    /**
      * @ORM\Column(type="string", length=50)
      */
     private $nomPhoto;
@@ -41,18 +36,6 @@ class Photo
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getIdPhoto(): ?string
-    {
-        return $this->idPhoto;
-    }
-
-    public function setIdPhoto(string $idPhoto): self
-    {
-        $this->idPhoto = $idPhoto;
-
-        return $this;
     }
 
     public function getNomPhoto(): ?string

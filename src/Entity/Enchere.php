@@ -18,11 +18,6 @@ class Enchere
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $idEnchere;
-
-    /**
      * @ORM\Column(type="datetime_immutable")
      */
     private $dateEnchere;
@@ -74,18 +69,6 @@ class Enchere
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getIdEnchere(): ?string
-    {
-        return $this->idEnchere;
-    }
-
-    public function setIdEnchere(string $idEnchere): self
-    {
-        $this->idEnchere = $idEnchere;
-
-        return $this;
     }
 
     public function getDateEnchere(): ?\DateTimeImmutable

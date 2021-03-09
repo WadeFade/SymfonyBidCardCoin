@@ -20,11 +20,6 @@ class Produit
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $idProduit;
-
-    /**
      * @ORM\Column(type="string", length=50)
      */
     private $nomProduit;
@@ -109,18 +104,6 @@ class Produit
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getIdProduit(): ?string
-    {
-        return $this->idProduit;
-    }
-
-    public function setIdProduit(string $idProduit): self
-    {
-        $this->idProduit = $idProduit;
-
-        return $this;
     }
 
     public function getNomProduit(): ?string

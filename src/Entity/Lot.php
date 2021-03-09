@@ -20,11 +20,6 @@ class Lot
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $idLot;
-
-    /**
      * @ORM\Column(type="string", length=50)
      */
     private $nomLot;
@@ -59,18 +54,6 @@ class Lot
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getIdLot(): ?string
-    {
-        return $this->idLot;
-    }
-
-    public function setIdLot(string $idLot): self
-    {
-        $this->idLot = $idLot;
-
-        return $this;
     }
 
     public function getNomLot(): ?string

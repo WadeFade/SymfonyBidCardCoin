@@ -22,11 +22,6 @@ class SalleEnchere
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $idSalleEnchere;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     private $nomVente;
 
     /**
@@ -52,18 +47,6 @@ class SalleEnchere
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getIdSalleEnchere(): ?string
-    {
-        return $this->idSalleEnchere;
-    }
-
-    public function setIdSalleEnchere(string $idSalleEnchere): self
-    {
-        $this->idSalleEnchere = $idSalleEnchere;
-
-        return $this;
     }
 
     public function getNomVente(): ?string

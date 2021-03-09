@@ -20,11 +20,6 @@ class Categorie
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $idCategorie;
-
-    /**
      * @ORM\Column(type="string", length=50)
      */
     private $nomCategorie;
@@ -53,18 +48,6 @@ class Categorie
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getIdCategorie(): ?string
-    {
-        return $this->idCategorie;
-    }
-
-    public function setIdCategorie(string $idCategorie): self
-    {
-        $this->idCategorie = $idCategorie;
-
-        return $this;
     }
 
     public function getNomCategorie(): ?string

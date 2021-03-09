@@ -20,11 +20,6 @@ class Stockage
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $idStockage;
-
-    /**
      * @ORM\ManyToOne(targetEntity=adresse::class, inversedBy="stockages")
      */
     private $adresse;
@@ -42,18 +37,6 @@ class Stockage
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getIdStockage(): ?string
-    {
-        return $this->idStockage;
-    }
-
-    public function setIdStockage(string $idStockage): self
-    {
-        $this->idStockage = $idStockage;
-
-        return $this;
     }
 
     public function getAdresse(): ?adresse

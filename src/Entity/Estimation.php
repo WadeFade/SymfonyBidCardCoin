@@ -18,16 +18,11 @@ class Estimation
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $idEstimation;
-
-    /**
      * @ORM\ManyToOne(targetEntity=produit::class, inversedBy="estimations")
      * @ORM\JoinColumn(nullable=false)
      */
     private $produit;
-    
+
     /**
      * @ORM\Column(type="float")
      */
@@ -47,18 +42,6 @@ class Estimation
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getIdEstimation(): ?string
-    {
-        return $this->idEstimation;
-    }
-
-    public function setIdEstimation(string $idEstimation): self
-    {
-        $this->idEstimation = $idEstimation;
-
-        return $this;
     }
 
     public function getProduit(): ?produit

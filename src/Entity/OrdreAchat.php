@@ -20,11 +20,6 @@ class OrdreAchat
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $idOrdreAchat;
-
-    /**
      * @ORM\Column(type="float")
      */
     private $prixMax;
@@ -59,18 +54,6 @@ class OrdreAchat
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getIdOrdreAchat(): ?string
-    {
-        return $this->idOrdreAchat;
-    }
-
-    public function setIdOrdreAchat(string $idOrdreAchat): self
-    {
-        $this->idOrdreAchat = $idOrdreAchat;
-
-        return $this;
     }
 
     public function getPrixMax(): ?float

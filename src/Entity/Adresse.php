@@ -20,11 +20,6 @@ class Adresse
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $idAdresse;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $num;
@@ -74,18 +69,6 @@ class Adresse
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getIdAdresse(): ?string
-    {
-        return $this->idAdresse;
-    }
-
-    public function setIdAdresse(string $idAdresse): self
-    {
-        $this->idAdresse = $idAdresse;
-
-        return $this;
     }
 
     public function getNum(): ?int

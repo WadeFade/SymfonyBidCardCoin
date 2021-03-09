@@ -18,11 +18,6 @@ class Paiement
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $idPaiement;
-
-    /**
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $typePaiement;
@@ -41,18 +36,6 @@ class Paiement
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getIdPaiement(): ?string
-    {
-        return $this->idPaiement;
-    }
-
-    public function setIdPaiement(string $idPaiement): self
-    {
-        $this->idPaiement = $idPaiement;
-
-        return $this;
     }
 
     public function getTypePaiement(): ?string
