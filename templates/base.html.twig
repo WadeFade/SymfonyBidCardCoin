@@ -10,7 +10,13 @@
 </head>
 <body>
 {# BODY #}
-{{ render(controller("App\\Controller\\MenuController::menu")) }}
+{% if is_granted('ROLE_ADMIN') %}
+    {{ render(controller("App\\Controller\\MenuController::menuAdmin")) }}
+{% elseif is_granted('ROLE_COMMISSAIRE') %}
+    {{ render(controller("App\\Controller\\MenuController::menuCommissaire")) }}
+{% elseif is_granted('ROLE_USER') %}
+    {{ render(controller("App\\Controller\\MenuController::menu")) }}
+{% endif %}
 <div class="container-fluid">
     {% block body %}{% endblock %}
 </div>

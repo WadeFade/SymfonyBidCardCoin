@@ -30,11 +30,6 @@ class Categorie
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity=Categorie::class, mappedBy="categories")
-     */
-    private $categories;
-
-    /**
      * @ORM\OneToMany(targetEntity=Produit::class, mappedBy="categorie")
      */
     private $produits;
@@ -70,36 +65,6 @@ class Categorie
     public function setDescription(?string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Categorie[]
-     */
-    public function getCategories(): Collection
-    {
-        return $this->categories;
-    }
-
-    public function addCategory(Categorie $category): self
-    {
-        if (!$this->categories->contains($category)) {
-            $this->categories[] = $category;
-            $category->setCategories($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCategory(Categorie $category): self
-    {
-        if ($this->categories->removeElement($category)) {
-            // set the owning side to null (unless already changed)
-            if ($category->getCategories() === $this) {
-                $category->setCategories(null);
-            }
-        }
 
         return $this;
     }

@@ -49,7 +49,7 @@ class User implements UserInterface
     private $prenom;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @ORM\Column(type="datetime")
      */
     private $dateNaissance;
 
@@ -61,12 +61,12 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="boolean")
      */
-    private $verifIdentite;
+    private $verifIdentite = false;
 
     /**
      * @ORM\Column(type="smallint")
      */
-    private $modePaiement;
+    private $modePaiement = 0;
 
     /**
      * @ORM\ManyToMany(targetEntity=Adresse::class, mappedBy="personnes")
@@ -219,12 +219,12 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getDateNaissance(): ?\DateTimeImmutable
+    public function getDateNaissance(): ?\DateTime
     {
         return $this->dateNaissance;
     }
 
-    public function setDateNaissance(\DateTimeImmutable $dateNaissance): self
+    public function setDateNaissance(\DateTime $dateNaissance): self
     {
         $this->dateNaissance = $dateNaissance;
 
