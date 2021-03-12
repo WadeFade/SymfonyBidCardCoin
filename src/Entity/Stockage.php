@@ -20,7 +20,7 @@ class Stockage
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=adresse::class, inversedBy="stockages")
+     * @ORM\ManyToOne(targetEntity=Adresse::class, inversedBy="stockages")
      */
     private $adresse;
 

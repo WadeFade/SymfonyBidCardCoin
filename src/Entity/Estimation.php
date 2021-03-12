@@ -18,7 +18,7 @@ class Estimation
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=produit::class, inversedBy="estimations")
+     * @ORM\ManyToOne(targetEntity=Produit::class, inversedBy="estimations")
      * @ORM\JoinColumn(nullable=false)
      */
     private $produit;
@@ -44,12 +44,12 @@ class Estimation
         return $this->id;
     }
 
-    public function getProduit(): ?produit
+    public function getProduit(): ?Produit
     {
         return $this->produit;
     }
 
-    public function setProduit(?produit $produit): self
+    public function setProduit(?Produit $produit): self
     {
         $this->produit = $produit;
 

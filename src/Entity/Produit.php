@@ -45,17 +45,17 @@ class Produit
     private $prixVente;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default": false})
      */
     private $estVendu;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default": false})
      */
     private $enStock;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", options={"default": 0})
      */
     private $nbInvendu;
 
@@ -80,13 +80,12 @@ class Produit
     private $estimations;
 
     /**
-     * @ORM\ManyToOne(targetEntity=stockage::class, inversedBy="produits")
+     * @ORM\ManyToOne(targetEntity=Stockage::class, inversedBy="produits")
      */
     private $stockage;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="produitsAVendre")
-     * @ORM\JoinColumn(nullable=false)
      */
     private $vendeur;
 
@@ -99,6 +98,15 @@ class Produit
     {
         $this->photos = new ArrayCollection();
         $this->estimations = new ArrayCollection();
+        $this->estVendu = false;
+        $this->enStock = false;
+        $this->nbInvendu = 0;
+        $this->vendeur = null;
+    }
+
+    public function __toString(): string
+    {
+        return $this->nomProduit;
     }
 
     public function getId(): ?int
@@ -286,12 +294,12 @@ class Produit
         return $this;
     }
 
-    public function getStockage(): ?stockage
+    public function getStockage(): ?Stockage
     {
         return $this->stockage;
     }
 
-    public function setStockage(?stockage $stockage): self
+    public function setStockage(?Stockage $stockage): self
     {
         $this->stockage = $stockage;
 

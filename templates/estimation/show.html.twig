@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Estimation{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-4">Estimation</h1>
+
+        <table class="table">
+            <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ estimation.id }}</td>
+            </tr>
+            <tr>
+                <th>PrixEstimation</th>
+                <td>{{ estimation.prixEstimation }}</td>
+            </tr>
+            <tr>
+                <th>DateEstimation</th>
+                <td>{{ estimation.dateEstimation ? estimation.dateEstimation|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <a class="btn btn-primary" href="{{ path('estimation_index') }}">Retour</a>
+
+        <a class="btn btn-success" href="{{ path('estimation_edit', {'id': estimation.id}) }}">Modifier</a>
+
+        {{ include('estimation/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

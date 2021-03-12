@@ -66,12 +66,18 @@ class Adresse
         $this->personnes = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        $toReturn = $this->num .' '. $this->rue .' '.$this->ville;
+        return $toReturn;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNum(): ?int
+    public function _getNum(): ?int
     {
         return $this->num;
     }

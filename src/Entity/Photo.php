@@ -28,7 +28,7 @@ class Photo
     private $urlPhoto;
 
     /**
-     * @ORM\ManyToOne(targetEntity=produit::class, inversedBy="photos")
+     * @ORM\ManyToOne(targetEntity=Produit::class, inversedBy="photos")
      * @ORM\JoinColumn(nullable=false)
      */
     private $produit;
@@ -62,12 +62,12 @@ class Photo
         return $this;
     }
 
-    public function getProduit(): ?produit
+    public function getProduit(): ?Produit
     {
         return $this->produit;
     }
 
-    public function setProduit(?produit $produit): self
+    public function setProduit(?Produit $produit): self
     {
         $this->produit = $produit;
 

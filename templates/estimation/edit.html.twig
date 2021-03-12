@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier Estimation{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Estimation</h1>
+
+        {{ include('estimation/_form.html.twig', {'button_label': 'Update'}) }}
+
+        <a class="btn btn-primary mt-2" href="{{ path('estimation_index') }}">Retour</a>
+
+        {{ include('estimation/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

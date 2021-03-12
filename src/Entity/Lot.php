@@ -30,7 +30,7 @@ class Lot
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity=produit::class, mappedBy="lot")
+     * @ORM\OneToMany(targetEntity=Produit::class, mappedBy="lot")
      */
     private $produits;
 
@@ -81,14 +81,14 @@ class Lot
     }
 
     /**
-     * @return Collection|produit[]
+     * @return Collection|Produit[]
      */
     public function getProduits(): Collection
     {
         return $this->produits;
     }
 
-    public function addProduit(produit $produit): self
+    public function addProduit(Produit $produit): self
     {
         if (!$this->produits->contains($produit)) {
             $this->produits[] = $produit;
@@ -98,7 +98,7 @@ class Lot
         return $this;
     }
 
-    public function removeProduit(produit $produit): self
+    public function removeProduit(Produit $produit): self
     {
         if ($this->produits->removeElement($produit)) {
             // set the owning side to null (unless already changed)

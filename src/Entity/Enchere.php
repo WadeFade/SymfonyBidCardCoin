@@ -44,7 +44,7 @@ class Enchere
     private $ordreAchat;
 
     /**
-     * @ORM\ManyToOne(targetEntity=salleEnchere::class, inversedBy="encheres")
+     * @ORM\ManyToOne(targetEntity=SalleEnchere::class, inversedBy="encheres")
      * @ORM\JoinColumn(nullable=false)
      */
     private $salleVente;
@@ -131,12 +131,12 @@ class Enchere
         return $this;
     }
 
-    public function getSalleVente(): ?salleEnchere
+    public function getSalleVente(): ?SalleEnchere
     {
         return $this->salleVente;
     }
 
-    public function setSalleVente(?salleEnchere $salleVente): self
+    public function setSalleVente(?SalleEnchere $salleVente): self
     {
         $this->salleVente = $salleVente;
 

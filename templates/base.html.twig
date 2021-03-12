@@ -10,16 +10,16 @@
 </head>
 <body>
 {# BODY #}
-{% if is_granted('ROLE_ADMIN') %}
-    {{ render(controller("App\\Controller\\MenuController::menuAdmin")) }}
-{% elseif is_granted('ROLE_COMMISSAIRE') %}
-    {{ render(controller("App\\Controller\\MenuController::menuCommissaire")) }}
-{% elseif is_granted('ROLE_USER') %}
+{#{% if is_granted('ROLE_ADMIN') %}#}
+{#    {{ render(controller("App\\Controller\\MenuController::menuAdmin")) }}#}
+{#{% elseif is_granted('ROLE_COMMISSAIRE') %}#}
+{#    {{ render(controller("App\\Controller\\MenuController::menuCommissaire")) }}#}
+{#{% elseif is_granted('ROLE_USER') %}#}
     {{ render(controller("App\\Controller\\MenuController::menu")) }}
-{% endif %}
-<div class="container-fluid">
-    {% block body %}{% endblock %}
-</div>
+{#{% endif %}#}
+
+{% block body %}{% endblock %}
+
 {# JS #}
 <script src="https://kit.fontawesome.com/edc8d5fc95.js" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
