@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout Photo{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-4 mb-4">Ajout photo Photo</h1>
+
+        {{ include('photo/_form.html.twig') }}
+
+        <a class="btn btn-primary mt-2" href="{{ path('photo_index') }}">Retour</a>
+    </div>
+{% endblock %}
