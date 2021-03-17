@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier Stockage{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-4 mb-4">Modifier Stockage</h1>
+
+        {{ include('stockage/_form.html.twig', {'button_label': 'Update'}) }}
+
+        <a class="btn btn-primary mt-2" href="{{ path('stockage_index') }}">Retour</a>
+
+        {{ include('stockage/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

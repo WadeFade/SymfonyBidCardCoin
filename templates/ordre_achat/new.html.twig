@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout un ordre d'achat{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-4 mb-4">Ajouter un ordre d'achat</h1>
+
+        {{ include('ordre_achat/_form.html.twig') }}
+
+        <a class="btn btn-primary mt-2" href="{{ path('ordre_achat_index') }}">Retour</a>
+    </div>
+{% endblock %}

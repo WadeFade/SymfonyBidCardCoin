@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier ordre d'achat{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Modifier ordre d'achat</h1>
+
+        {{ include('ordre_achat/_form.html.twig', {'button_label': 'Update'}) }}
+
+        <a class="btn btn-primary mt-2" href="{{ path('ordre_achat_index') }}">Retour</a>
+
+        {{ include('ordre_achat/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

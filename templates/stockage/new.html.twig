@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout Stockage{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-4 mb-4">Ajouter un Stockage</h1>
+
+        {{ include('stockage/_form.html.twig') }}
+
+        <a class="btn btn-primary mt-2" href="{{ path('stockage_index') }}">Retour</a>
+    </div>
+{% endblock %}

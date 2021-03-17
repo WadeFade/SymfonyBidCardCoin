@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des ordres d'achat{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <h1>Liste des ordres d'achat</h1>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>PrixMax</th>
+                <th>DateOrdreAchat</th>
+                <th>actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for ordre_achat in ordre_achats %}
+                <tr>
+                    <td>{{ ordre_achat.id }}</td>
+                    <td>{{ ordre_achat.prixMax }}</td>
+                    <td>{{ ordre_achat.dateOrdreAchat ? ordre_achat.dateOrdreAchat|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>
+                        <a class="btn btn-success" href="{{ path('ordre_achat_show', {'id': ordre_achat.id}) }}"><i
+                                    class="fas fa-eye"></i></a>
+                        <a class="btn btn-primary" href="{{ path('ordre_achat_edit', {'id': ordre_achat.id}) }}"><i
+                                    class="fas fa-edit"></i></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">Aucun ordre d'achat trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a class="btn btn-success" href="{{ path('ordre_achat_new') }}">Ajouter</a>
+    </div>
+{% endblock %}

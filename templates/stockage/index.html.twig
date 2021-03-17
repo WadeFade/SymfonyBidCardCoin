@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des stockages{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <h1 class="mt-4 mb-4">Liste des stockages</h1>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for stockage in stockages %}
+                <tr>
+                    <td>{{ stockage.id }}</td>
+                    <td>
+                        <a class="btn btn-success" href="{{ path('stockage_show', {'id': stockage.id}) }}"><i class="fas fa-eye"></i></a>
+                        <a class="btn btn-primary" href="{{ path('stockage_edit', {'id': stockage.id}) }}"><i class="fas fa-edit"></i></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="2">Aucun stockage trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a class="btn btn-success" href="{{ path('stockage_new') }}">Ajouter</a>
+    </div>
+{% endblock %}
