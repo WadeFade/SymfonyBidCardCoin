@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier Paiement{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-4 mb-4">Modifier Paiement</h1>
+
+        {{ include('paiement/_form.html.twig', {'button_label': 'Update'}) }}
+
+        <a class="btn btn-primary mt-2" href="{{ path('paiement_index') }}">Retour</a>
+
+        {{ include('paiement/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

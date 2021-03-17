@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter Paiement{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-4 mb-4">Ajout un Paiement</h1>
+
+        {{ include('paiement/_form.html.twig') }}
+
+        <a class="btn btn-primary mt-2" href="{{ path('paiement_index') }}">Retour</a>
+    </div>
+{% endblock %}

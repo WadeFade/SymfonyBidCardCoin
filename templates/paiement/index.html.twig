@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des paiements{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <h1 class="mt-4 mb-4">Liste des paiements</h1>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>TypePaiement</th>
+                <th>ValidationPaiement</th>
+                <th>actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for paiement in paiements %}
+                <tr>
+                    <td>{{ paiement.id }}</td>
+                    <td>{{ paiement.typePaiement }}</td>
+                    <td>{{ paiement.validationPaiement ? 'Yes' : 'No' }}</td>
+                    <td>
+                        <a class="btn btn-success" href="{{ path('paiement_show', {'id': paiement.id}) }}"><i class="fas fa-eye"></i></a>
+                        <a class="btn btn-primary" href="{{ path('paiement_edit', {'id': paiement.id}) }}"><i class="fas fa-edit"></i></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">Aucun paiement trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a class="btn btn-success" href="{{ path('paiement_new') }}">Ajouter</a>
+    </div>
+{% endblock %}

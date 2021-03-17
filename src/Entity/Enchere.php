@@ -66,6 +66,12 @@ class Enchere
      */
     private $encherisseur;
 
+//    TODO trouvé une façon d'afficher plus d'info ? (pas prioritaire)
+    public function __toString()
+    {
+      return (string)$this->id;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

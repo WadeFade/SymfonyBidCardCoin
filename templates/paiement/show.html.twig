@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paiement{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-4 mb-4">Paiement</h1>
+
+        <table class="table">
+            <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ paiement.id }}</td>
+            </tr>
+            <tr>
+                <th>TypePaiement</th>
+                <td>{{ paiement.typePaiement }}</td>
+            </tr>
+            <tr>
+                <th>ValidationPaiement</th>
+                <td>{{ paiement.validationPaiement ? 'Yes' : 'No' }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <a class="btn btn-primary" href="{{ path('paiement_index') }}">Retour</a>
+
+        <a class="btn btn-success" href="{{ path('paiement_edit', {'id': paiement.id}) }}">Modifier</a>
+
+        {{ include('paiement/_delete_form.html.twig') }}
+    </div>
+{% endblock %}
