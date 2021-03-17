@@ -1,13 +1,41 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Les Enchères{% endblock %}
+{% block title %}Liste des enchères{% endblock %}
 
 {% block body %}
+    <div class="container-fluid">
+        <h1 class="mt-4 mb-4">Liste des enchères</h1>
 
-    <div class="container mt-4">
-        <h1>Listes des enchères en cours et à venir</h1>
-        <p>Ici, vous pouvez retrouver toutes les ventes ou futur vente prévu avec leur dates et lieux, vous pouvez allez
-        voir les détails de vente en cliquant sur les cartes.</p>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>DateEnchere</th>
+                <th>PrixPropose</th>
+                <th>EstAdjuge</th>
+                <th>actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for enchere in encheres %}
+                <tr>
+                    <td>{{ enchere.id }}</td>
+                    <td>{{ enchere.dateEnchere ? enchere.dateEnchere|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ enchere.prixPropose }}</td>
+                    <td>{{ enchere.estAdjuge ? 'Yes' : 'No' }}</td>
+                    <td>
+                        <a class="btn btn-success" href="{{ path('enchere_show', {'id': enchere.id}) }}"><i class="fas fa-eye"></i></a>
+                        <a class="btn btn-primary" href="{{ path('enchere_edit', {'id': enchere.id}) }}"><i class="fas fa-edit"></i></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">Aucune enchère trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a class="btn btn-success" href="{{ path('enchere_new') }}">Ajouter</a>
     </div>
-
 {% endblock %}

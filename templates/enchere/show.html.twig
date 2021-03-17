@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Enchere{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-4 mb-4">Enchere</h1>
+
+        <table class="table">
+            <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ enchere.id }}</td>
+            </tr>
+            <tr>
+                <th>DateEnchere</th>
+                <td>{{ enchere.dateEnchere ? enchere.dateEnchere|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>PrixPropose</th>
+                <td>{{ enchere.prixPropose }}</td>
+            </tr>
+            <tr>
+                <th>EstAdjuge</th>
+                <td>{{ enchere.estAdjuge ? 'Yes' : 'No' }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <a class="btn btn-primary" href="{{ path('enchere_index') }}">Retour</a>
+
+        <a class="btn btn-success" href="{{ path('enchere_edit', {'id': enchere.id}) }}">Modifier</a>
+
+        {{ include('enchere/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

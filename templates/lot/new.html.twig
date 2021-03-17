@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout Lot{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Ajouter un Lot</h1>
+
+        {{ include('lot/_form.html.twig') }}
+
+        <a class="btn btn-primary" href="{{ path('lot_index') }}">Retour</a>
+    </div>
+{% endblock %}

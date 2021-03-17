@@ -51,6 +51,11 @@ class Lot
         $this->ordreAchats = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->nomLot;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

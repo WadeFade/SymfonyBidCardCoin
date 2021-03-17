@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des ventes{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <h1 class="mt-4 mb-4">Liste des ventes</h1>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>NomVente</th>
+                <th>Description</th>
+                <th>actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for salle_enchere in salle_encheres %}
+                <tr>
+                    <td>{{ salle_enchere.id }}</td>
+                    <td>{{ salle_enchere.nomVente }}</td>
+                    <td>{{ salle_enchere.description }}</td>
+                    <td>
+                        <a class="btn btn-success" href="{{ path('salle_enchere_show', {'id': salle_enchere.id}) }}"><i class="fas fa-eye"></i></a>
+                        <a class="btn btn-primary" href="{{ path('salle_enchere_edit', {'id': salle_enchere.id}) }}"><i class="fas fa-edit"></i></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">Aucune vente trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a class="btn btn-success" href="{{ path('salle_enchere_new') }}">Ajouter</a>
+    </div>
+{% endblock %}

@@ -30,7 +30,7 @@ class SalleEnchere
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity=adresse::class, inversedBy="salleEncheres")
+     * @ORM\ManyToOne(targetEntity=Adresse::class, inversedBy="salleEncheres")
      */
     private $adresse;
 
@@ -42,6 +42,11 @@ class SalleEnchere
     public function __construct()
     {
         $this->encheres = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->nomVente;
     }
 
     public function getId(): ?int
@@ -73,12 +78,12 @@ class SalleEnchere
         return $this;
     }
 
-    public function getAdresse(): ?adresse
+    public function getAdresse(): ?Adresse
     {
         return $this->adresse;
     }
 
-    public function setAdresse(?adresse $adresse): self
+    public function setAdresse(?Adresse $adresse): self
     {
         $this->adresse = $adresse;
 

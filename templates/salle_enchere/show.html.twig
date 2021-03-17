@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SalleEnchere{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-4 mb-4">Vente</h1>
+
+        <table class="table">
+            <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ salle_enchere.id }}</td>
+            </tr>
+            <tr>
+                <th>NomVente</th>
+                <td>{{ salle_enchere.nomVente }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ salle_enchere.description }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <a class="btn btn-primary" href="{{ path('salle_enchere_index') }}">Retour</a>
+
+        <a class="btn btn-success" href="{{ path('salle_enchere_edit', {'id': salle_enchere.id}) }}">Modifier</a>
+
+        {{ include('salle_enchere/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

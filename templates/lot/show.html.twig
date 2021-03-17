@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lot{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Lot</h1>
+
+        <table class="table">
+            <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ lot.id }}</td>
+            </tr>
+            <tr>
+                <th>NomLot</th>
+                <td>{{ lot.nomLot }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ lot.description }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <a class="btn btn-primary" href="{{ path('lot_index') }}">Retour</a>
+
+        <a class="btn btn-success" href="{{ path('lot_edit', {'id': lot.id}) }}">Modifier</a>
+
+        {{ include('lot/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

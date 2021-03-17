@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des lots{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <h1 class="mb-4 mt-4">Liste des lots</h1>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>NomLot</th>
+                <th>Description</th>
+                <th>actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for lot in lots %}
+                <tr>
+                    <td>{{ lot.id }}</td>
+                    <td>{{ lot.nomLot }}</td>
+                    <td>{{ lot.description }}</td>
+                    <td>
+                        <a class="btn btn-success" href="{{ path('lot_show', {'id': lot.id}) }}"><i class="fas fa-eye"></i></a>
+                        <a class="btn btn-primary" href="{{ path('lot_edit', {'id': lot.id}) }}"><i class="fas fa-edit"></i></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">Aucun lot trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a class="btn btn-success" href="{{ path('lot_new') }}">Ajouter</a>
+    </div>
+{% endblock %}

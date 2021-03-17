@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout Enchère{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-4 mb-4">Ajout Enchère</h1>
+
+        {{ include('enchere/_form.html.twig') }}
+
+        <a class="btn btn-primary" href="{{ path('enchere_index') }}">Retour</a>
+    </div>
+{% endblock %}

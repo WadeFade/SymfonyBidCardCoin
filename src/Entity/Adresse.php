@@ -77,7 +77,7 @@ class Adresse
         return $this->id;
     }
 
-    public function _getNum(): ?int
+    public function getNum(): ?int
     {
         return $this->num;
     }
