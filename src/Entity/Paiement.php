@@ -33,6 +33,11 @@ class Paiement
      */
     private $enchere;
 
+    public function __toString()
+    {
+        return 'ID: '.$this->id.' ENCHERE: '.$this->enchere.' TYPE-PAIEMENT: '.$this->typePaiement;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

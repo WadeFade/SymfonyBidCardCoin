@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard - BidCardCoin{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <h1 class="mt-4 mb-4 text-center">Pannel d'administration de BidCardCoin</h1>
+        <div class="d-flex flex-row flex-wrap">
+            <div class="card mr-4 mb-4" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Gestion User</h5>
+                    <p class="card-text">Menu de gestion pour administrer les utilisateurs.</p>
+                    <a href="{{ path('user_index') }}" class="btn btn-primary">Accéder</a>
+                </div>
+            </div>
+            <div class="card mr-4 mb-4" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Gestion Produit</h5>
+                    <p class="card-text">Menu de gestion pour administrer les produits.</p>
+                    <a href="{{ path('produit_index') }}" class="btn btn-primary">Accéder</a>
+                </div>
+            </div>
+            <div class="card mr-4 mb-4" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Gestion Catégorie</h5>
+                    <p class="card-text">Menu de gestion pour administrer les catégories.</p>
+                    <a href="{{ path('categorie_index') }}" class="btn btn-primary">Accéder</a>
+                </div>
+            </div>
+            <div class="card mr-4 mb-4" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Gestion Lot</h5>
+                    <p class="card-text">Menu de gestion pour administrer les lots.</p>
+                    <a href="{{ path('lot_index') }}" class="btn btn-primary">Accéder</a>
+                </div>
+            </div>
+            <div class="card mr-4 mb-4" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Gestion Estimation</h5>
+                    <p class="card-text">Menu de gestion pour administrer les estimations.</p>
+                    <a href="{{ path('estimation_index') }}" class="btn btn-primary">Accéder</a>
+                </div>
+            </div>
+            <div class="card mr-4 mb-4" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Gestion SalleEnchere(Vente)</h5>
+                    <p class="card-text">Menu de gestion pour administrer les ventes.</p>
+                    <a href="{{ path('salle_enchere_index') }}" class="btn btn-primary">Accéder</a>
+                </div>
+            </div>
+            <div class="card mr-4 mb-4" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Gestion Enchère</h5>
+                    <p class="card-text">Menu de gestion pour administrer les enchères.</p>
+                    <a href="{{ path('enchere_index') }}" class="btn btn-primary">Accéder</a>
+                </div>
+            </div>
+            <div class="card mr-4 mb-4" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Gestion OrdreAchat</h5>
+                    <p class="card-text">Menu de gestion pour administrer les ordres d'achat.</p>
+                    <a href="{{ path('ordre_achat_index') }}" class="btn btn-primary">Accéder</a>
+                </div>
+            </div>
+            <div class="card mr-4 mb-4" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Gestion Stockage</h5>
+                    <p class="card-text">Menu de gestion pour administrer les stockages.</p>
+                    <a href="{{ path('stockage_index') }}" class="btn btn-primary">Accéder</a>
+                </div>
+            </div>
+            <div class="card mr-4 mb-4" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Gestion Paiement</h5>
+                    <p class="card-text">Menu de gestion pour administrer les paiements.</p>
+                    <a href="{{ path('paiement_index') }}" class="btn btn-primary">Accéder</a>
+                </div>
+            </div>
+            <div class="card mr-4 mb-4" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Gestion Adresse</h5>
+                    <p class="card-text">Menu de gestion pour administrer les adresses.</p>
+                    <a href="{{ path('adresse_index') }}" class="btn btn-primary">Accéder</a>
+                </div>
+            </div>
+            <div class="card mr-4 mb-4" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Gestion Photo</h5>
+                    <p class="card-text">Menu de gestion pour administrer les photos.</p>
+                    <a href="{{ path('photo_index') }}" class="btn btn-primary">Accéder</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -51,6 +51,11 @@ class OrdreAchat
         $this->encheres = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->id.' '.$this->lot;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

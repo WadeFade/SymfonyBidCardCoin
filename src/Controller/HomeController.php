@@ -19,4 +19,21 @@ class HomeController extends AbstractController
             'controller_name' => 'HomeController',
         ]);
     }
+
+    /**
+     * @Route("/dashboard", name="dashboard")
+     */
+    public function dashboard(): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $userRoles = $this->getUser()->getRoles();
+//        Rejeter l'accès au non admin et non super admin
+        if(!(in_array('ROLE_SUPER_ADMIN', $userRoles) || in_array('ROLE_ADMIN', $userRoles))){
+            $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        }
+
+        return $this->render('home/dashboard.html.twig', [
+            'controller_name' => 'DashboardController',
+        ]);
+    }
 }

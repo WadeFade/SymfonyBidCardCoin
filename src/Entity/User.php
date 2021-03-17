@@ -115,7 +115,7 @@ class User implements UserInterface
     }
 
     public function __toString(){
-        return $this->nom;
+        return strtoupper($this->nom) .' '. $this->prenom;
     }
 
     public function getId(): ?int
