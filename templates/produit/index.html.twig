@@ -5,13 +5,13 @@
 {% block body %}
     <div class="container-fluid">
     <h1 class="mt-4 mb-4">Liste de tous les produits</h1>
-
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>NomProduit</th>
-                <th>Description</th>
+{#                <th>Description</th>#}
+                <th>Estimation</th>
                 <th>PrixReserve</th>
                 <th>PrixDepart</th>
                 <th>PrixVente</th>
@@ -26,7 +26,8 @@
             <tr>
                 <td>{{ produit.id }}</td>
                 <td>{{ produit.nomProduit }}</td>
-                <td>{{ produit.description }}</td>
+{#                <td>{{ produit.description }}</td>#}
+                <td>{{ produit.estimations.last }}</td>
                 <td>{{ produit.prixReserve }}</td>
                 <td>{{ produit.prixDepart }}</td>
                 <td>{{ produit.prixVente }}</td>

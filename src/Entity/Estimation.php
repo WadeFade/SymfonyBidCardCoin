@@ -39,6 +39,11 @@ class Estimation
      */
     private $commissaire;
 
+    public function __toString()
+    {
+        return (string)$this->prixEstimation;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

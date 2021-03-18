@@ -11,6 +11,7 @@
             <tr>
                 <th>Id</th>
                 <th>NomLot</th>
+                <th>Dernière-Enchère</th>
                 <th>Description</th>
                 <th>actions</th>
             </tr>
@@ -20,6 +21,7 @@
                 <tr>
                     <td>{{ lot.id }}</td>
                     <td>{{ lot.nomLot }}</td>
+                    <td>{{ 'ID: ' ~ lot.encheres.last.id ~ ' Prix: ' ~ lot.encheres.last.prixPropose }}</td>
                     <td>{{ lot.description }}</td>
                     <td>
                         <a class="btn btn-success" href="{{ path('lot_show', {'id': lot.id}) }}"><i class="fas fa-eye"></i></a>

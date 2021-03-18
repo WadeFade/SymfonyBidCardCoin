@@ -12,6 +12,7 @@
                 <th>Id</th>
                 <th>PrixEstimation</th>
                 <th>DateEstimation</th>
+                <th>Produit</th>
                 <th>actions</th>
             </tr>
             </thead>
@@ -21,6 +22,7 @@
                     <td>{{ estimation.id }}</td>
                     <td>{{ estimation.prixEstimation }}</td>
                     <td>{{ estimation.dateEstimation ? estimation.dateEstimation|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ estimation.produit }}</td>
                     <td>
                         <a class="btn btn-success" href="{{ path('estimation_show', {'id': estimation.id}) }}"><i class="fas fa-eye"></i></a>
                         <a class="btn btn-primary" href="{{ path('estimation_edit', {'id': estimation.id}) }}"><i class="fas fa-edit"></i></a>

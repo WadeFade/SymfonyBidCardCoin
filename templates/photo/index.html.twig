@@ -12,6 +12,7 @@
                 <th>Id</th>
                 <th>NomPhoto</th>
                 <th>UrlPhoto</th>
+                <th>Produit</th>
                 <th>actions</th>
             </tr>
             </thead>
@@ -20,7 +21,8 @@
                 <tr>
                     <td>{{ photo.id }}</td>
                     <td>{{ photo.nomPhoto }}</td>
-                    <td>{{ photo.urlPhoto }}</td>
+                    <td>{{ photo.urlPhoto|length > 50 ? photo.urlPhoto|slice(0, 50) ~ '...' : photo.urlPhoto }}</td>
+                    <td>{{ photo.produit }}</td>
                     <td>
                         <a class="btn btn-success" href="{{ path('photo_show', {'id': photo.id}) }}"><i class="fas fa-eye"></i></a>
                         <a class="btn btn-primary" href="{{ path('photo_edit', {'id': photo.id}) }}"><i class="fas fa-edit"></i></a>
