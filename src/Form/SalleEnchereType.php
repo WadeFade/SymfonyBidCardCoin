@@ -6,6 +6,7 @@ use App\Entity\SalleEnchere;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Date;
 
 class SalleEnchereType extends AbstractType
 {
@@ -14,6 +15,9 @@ class SalleEnchereType extends AbstractType
         $builder
             ->add('nomVente')
             ->add('description')
+            ->add('commissaire')
+            ->add('dateStart')
+            ->add('dateEnd')
             ->add('adresse')
         ;
     }

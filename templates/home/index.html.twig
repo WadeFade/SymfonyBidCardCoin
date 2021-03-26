@@ -3,9 +3,45 @@
 {% block title %}Accueil - BidCardCoin{% endblock %}
 
 {% block body %}
-<div class="jumbotron text-center">
-    <h1>Site de vente aux enchères BidCardCoin</h1>
-    <p>Bienvenue sur les sites de ventes aux enchères BidCardCoin, vous pouvez regarder les différents lots proposés à la vente,
-    ainsi que proposer vos propres produits. Ils seront estimer par nos commissaires priseurs avant leur potentiel mise en vente.</p>
-</div>
+    <div class="jumbotron text-center">
+        <h1>Site de vente aux enchères BidCardCoin</h1>
+        <p>Bienvenue sur les sites de ventes aux enchères BidCardCoin, vous pouvez regarder les différents lots proposés
+            à la vente,
+            ainsi que proposer vos propres produits. Ils seront estimer par nos commissaires priseurs avant leur
+            potentiel mise en vente.</p>
+    </div>
+    <div class="container-fluid">
+        <h2 class="text-center mb-4">Les ventes en cours / prochaines</h2>
+        <div class="d-flex justify-content-evenly flex-wrap">
+            {% for lot in lots %}
+                <div class="card mx-2 my-2" style="width: 18rem;">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ lot.nomLot }}</h5>
+                        <p class="card-text">{{ lot.description }}</p>
+                        <p class="card-text">{{ 'Adresse : ' ~ infosForLots[lot.id]['adresse'] }}</p>
+                        <div>
+                            <p>
+                                {% if infosForLots[lot.id]['estimationTotal'] > 0 %}
+                                    {{ 'Estimation total du lot : ' ~ infosForLots[lot.id]['estimationTotal'] ~ ' €' }}
+                                {% else %}
+                                    {{ 'Estimation total du lot : - €' }}
+                                {% endif %}
+                            </p>
+                            <p>
+                                {% if infosForLots[lot.id]['estimationMoyenne'] > 0 %}
+                                    {{ 'Estimation moyenne du lot : ' ~ infosForLots[lot.id]['estimationMoyenne'] ~ ' €' }}
+                                {% else %}
+                                    {{ 'Estimation moyenne du lot : - €' }}
+                                {% endif %}
+                            </p>
+                            <p>Commissaire : {{ infosForLots[lot.id]['commissaire'] }}</p>
+                        </div>
+                        <a href="#" class="btn btn-primary">Voir lot</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
 {% endblock %}

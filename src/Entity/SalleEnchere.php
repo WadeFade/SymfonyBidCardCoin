@@ -39,9 +39,25 @@ class SalleEnchere
      */
     private $encheres;
 
+    /**
+     * @ORM\Column(type="datetime_immutable", nullable=true)
+     */
+    private $dateStart;
+
+    /**
+     * @ORM\Column(type="datetime_immutable", nullable=true)
+     */
+    private $dateEnd;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="salleEncheres")
+     */
+    private $commissaire;
+
     public function __construct()
     {
         $this->encheres = new ArrayCollection();
+        $this->dateStart = new \DateTimeImmutable("now");
     }
 
     public function __toString()
@@ -116,6 +132,42 @@ class SalleEnchere
                 $enchere->setSalleVente(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDateStart(): ?\DateTimeInterface
+    {
+        return $this->dateStart;
+    }
+
+    public function setDateStart(?\DateTimeInterface $dateStart): self
+    {
+        $this->dateStart = $dateStart;
+
+        return $this;
+    }
+
+    public function getDateEnd(): ?\DateTimeInterface
+    {
+        return $this->dateEnd;
+    }
+
+    public function setDateEnd(?\DateTimeInterface $dateEnd): self
+    {
+        $this->dateEnd = $dateEnd;
+
+        return $this;
+    }
+
+    public function getCommissaire(): ?User
+    {
+        return $this->commissaire;
+    }
+
+    public function setCommissaire(?User $commissaire): self
+    {
+        $this->commissaire = $commissaire;
 
         return $this;
     }

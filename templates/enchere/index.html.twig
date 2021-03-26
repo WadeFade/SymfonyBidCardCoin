@@ -13,6 +13,7 @@
                 <th>DateEnchere</th>
                 <th>PrixPropose</th>
                 <th>EstAdjuge</th>
+                <th>Lot</th>
                 <th>actions</th>
             </tr>
             </thead>
@@ -23,6 +24,7 @@
                     <td>{{ enchere.dateEnchere ? enchere.dateEnchere|date('Y-m-d H:i:s') : '' }}</td>
                     <td>{{ enchere.prixPropose }}</td>
                     <td>{{ enchere.estAdjuge ? 'Yes' : 'No' }}</td>
+                    <td>{{ enchere.lot }}</td>
                     <td>
                         <a class="btn btn-success" href="{{ path('enchere_show', {'id': enchere.id}) }}"><i class="fas fa-eye"></i></a>
                         <a class="btn btn-primary" href="{{ path('enchere_edit', {'id': enchere.id}) }}"><i class="fas fa-edit"></i></a>

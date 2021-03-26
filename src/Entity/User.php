@@ -103,6 +103,11 @@ class User implements UserInterface
      */
     private $ordreAchats;
 
+    /**
+     * @ORM\OneToMany(targetEntity=SalleEnchere::class, mappedBy="commissaire")
+     */
+    private $salleEncheres;
+
     public function __construct()
     {
         $this->adresses = new ArrayCollection();
@@ -112,6 +117,7 @@ class User implements UserInterface
         $this->encheresAsCommissaire = new ArrayCollection();
         $this->encheresAsEncherisseur = new ArrayCollection();
         $this->ordreAchats = new ArrayCollection();
+        $this->salleEncheres = new ArrayCollection();
     }
 
     public function __toString(){
@@ -472,6 +478,36 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($ordreAchat->getOrderer() === $this) {
                 $ordreAchat->setOrderer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SalleEnchere[]
+     */
+    public function getSalleEncheres(): Collection
+    {
+        return $this->salleEncheres;
+    }
+
+    public function addSalleEnchere(SalleEnchere $salleEnchere): self
+    {
+        if (!$this->salleEncheres->contains($salleEnchere)) {
+            $this->salleEncheres[] = $salleEnchere;
+            $salleEnchere->setCommissaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSalleEnchere(SalleEnchere $salleEnchere): self
+    {
+        if ($this->salleEncheres->removeElement($salleEnchere)) {
+            // set the owning side to null (unless already changed)
+            if ($salleEnchere->getCommissaire() === $this) {
+                $salleEnchere->setCommissaire(null);
             }
         }
 
