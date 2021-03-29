@@ -27,8 +27,8 @@
                     <td>{{ salle_enchere.description }}</td>
                     <td>{{ salle_enchere.commissaire }}</td>
                     <td>{{ salle_enchere.encheres.count }}</td>
-                    <td>{{ salle_enchere.dateStart }}</td>
-                    <td>{{ salle_enchere.dateEnd }}</td>
+                    <td>{{ salle_enchere.dateStart ? salle_enchere.dateStart|date('Y-m-d H:i:s') : ' - ' }}</td>
+                    <td>{{ salle_enchere.dateEnd ? salle_enchere.dateEnd|date('Y-m-d H:i:s') : ' - ' }}</td>
                     <td>
                         <a class="btn btn-success" href="{{ path('salle_enchere_show', {'id': salle_enchere.id}) }}"><i
                                     class="fas fa-eye"></i></a>

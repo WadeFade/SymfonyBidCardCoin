@@ -12,9 +12,9 @@
     </div>
     <div class="container-fluid">
         <h2 class="text-center mb-4">Les ventes en cours / prochaines</h2>
-        <div class="d-flex justify-content-evenly flex-wrap">
+        <div class="d-flex justify-content-center flex-wrap">
             {% for lot in lots %}
-                <div class="card mx-2 my-2" style="width: 18rem;">
+                <div class="card mx-2 my-2" style="width: 28rem;">
                     <img src="..." class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">{{ lot.nomLot }}</h5>
@@ -30,14 +30,22 @@
                             </p>
                             <p>
                                 {% if infosForLots[lot.id]['estimationMoyenne'] > 0 %}
-                                    {{ 'Estimation moyenne du lot : ' ~ infosForLots[lot.id]['estimationMoyenne'] ~ ' €' }}
+                                    {{ 'Estimation moyenne des produits : ' ~ infosForLots[lot.id]['estimationMoyenne'] ~ ' €' }}
                                 {% else %}
-                                    {{ 'Estimation moyenne du lot : - €' }}
+                                    {{ 'Estimation moyenne des produits : - €' }}
                                 {% endif %}
                             </p>
                             <p>Commissaire : {{ infosForLots[lot.id]['commissaire'] }}</p>
+                            <p>Date :
+{#                                {% if infosForLots[lot.id]['datestart'] is not null %}#}
+{#                                    {{ infosForLots[lot.id]['datestart'] }}#}
+                                    {{ infosForLots[lot.id]['datestart'] ? infosForLots[lot.id]['datestart']|date('Y-m-d H:i:s') : ' - ' }}
+{#                                {% else %}#}
+{#                                    {{ ' - ' }}#}
+{#                                {% endif %}#}
+                            </p>
                         </div>
-                        <a href="#" class="btn btn-primary">Voir lot</a>
+                        <a href="{{ path("lotvente_show", {"id":lot.id}) }}" class="btn btn-primary">Voir lot</a>
                     </div>
                 </div>
             {% endfor %}
