@@ -2,8 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Enchere;
 use App\Entity\Lot;
+use App\Entity\SalleEnchere;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -29,14 +33,16 @@ class HomeController extends AbstractController
             if ($lot->getEncheres()->count() > 0) {
                 $encheres = $lot->getEncheres();
                 $enchere = $encheres->last();
-                $adresse = $enchere->getSalleVente()->getAdresse();
-                $dateStart = $enchere->getSalleVente()->getDateStart();
-//                TODO corrigé la date ici
-//                var_dump($dateStart);
+                $vente = $enchere->getSalleVente();
+                $adresse = $vente->getAdresse();
+                $dateStart = $vente->getDateStart();
+                $nomVente = $vente->getNomVente();
+                $commissaire = $vente->getCommissaire();
+//                Valeurs utiles pour la vue, dans le tableau qui lui sera envoyé.
                 $infosForLots[$lot->getId()]['adresse'] = $adresse;
                 $infosForLots[$lot->getId()]['datestart'] = $dateStart;
-                $commissaire = $enchere->getSalleVente()->getCommissaire();
                 $infosForLots[$lot->getId()]['commissaire'] = $commissaire;
+                $infosForLots[$lot->getId()]['nomvente'] = $nomVente;
             }
 
 //          Pour chaque lot on va récupérer tous les produits lié afin de faire la somme des estimations des produits du lot
@@ -72,6 +78,9 @@ class HomeController extends AbstractController
         $repo = $this->getDoctrine()->getRepository(Lot::class);
         $lot = $repo->find($id);
 
+//        ID user actuel
+        $idActualUser = $this->getUser()->getId();
+
 //        On récupère les produits liés au lot
         $produits = $lot->getProduits();
 
@@ -88,14 +97,68 @@ class HomeController extends AbstractController
 //        Pour récupérer la dernière enchère qui a été faite sur le lot
         $encheres = $lot->getEncheres();
         if ($encheres->count() > 0) {
-            $lastEnchere = $encheres->last()->getPrixPropose();
+            $lastEnchere = $encheres->last();
+            $prixLastEnchere = $lastEnchere->getPrixPropose();
+            $lastEncherisseur = $lastEnchere->getEncherisseur();
+            $vente = $lastEnchere->getSalleVente();
         }
 
         return $this->render('home/show_vente.html.twig', [
             'lot' => $lot,
             'infosProduit' => $infosProduit,
-            'lastEnchere' => $lastEnchere,
+            'lastEnchere' => $prixLastEnchere,
+            'lastEncherisseur' => $lastEncherisseur,
+            'idActualUser' => $idActualUser,
+            'vente' => $vente,
         ]);
+    }
+
+    /**
+     * @Route("/lotvente/{idLot}/{idVente}", name="encherir_lot")
+     * @param $idLot
+     * @param $idVente
+     * @return RedirectResponse
+     */
+    public function encherir($idLot, $idVente): RedirectResponse
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+//        Valeur par défaut à ajouter à l'enchère
+        $toAdd = 20.00;
+//        Instanciation d'un nouvel objet de type Enchere pour enchérir sur le lot actuel
+        $newEnchere = new Enchere();
+
+        $repo = $this->getDoctrine()->getRepository(User::class);
+//        On récupère l'utilisateur qui va enchérir
+        $user = $repo->find($this->getUser()->getId());
+//        On récupère la vente (salleenchere) sur laquelle l'enchère va être faite
+        $repoTwo = $this->getDoctrine()->getRepository(SalleEnchere::class);
+        $vente = $repoTwo->find($idVente);
+//        On récupère la dernière enchère faite sur le lot.
+        $lastEnchere = $vente->getEncheres()->last();
+//        On récupère le commissaire en charge de la vente pour ce lot
+        $commissaire = $vente->getCommissaire();
+//        On récupère le lot
+        $repoLot = $this->getDoctrine()->getRepository(Lot::class);
+        $lot = $repoLot->find($idLot);
+
+
+//        On set les datas du nouvel objet de type enchere
+        $newEnchere->setDateEnchere(new \DateTimeImmutable("now"));
+        $newEnchere->setLot($lot);
+        $newEnchere->setEncherisseur($user);
+        $newEnchere->setPrixPropose($lastEnchere->getPrixPropose() + $toAdd);
+        $newEnchere->setSalleVente($vente);
+        $newEnchere->setCommissaire($commissaire);
+        $newEnchere->setEstAdjuge(false);
+
+//        On appel l'entity manager pour préparer l'insert en BDD
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($newEnchere);
+//        On exécute la query
+        $em->flush();
+
+//        Et on redirige sur la page d'origine
+        return $this->redirectToRoute('lotvente_show', ['id' => $idLot]);
     }
 
     /**

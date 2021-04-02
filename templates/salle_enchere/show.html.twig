@@ -26,7 +26,7 @@
             </tr>
             <tr>
                 <th>Début</th>
-                <td>{{ salle_enchere.dateStart }}</td>
+                <td>{{ salle_enchere.dateStart ? salle_enchere.dateStart|date('Y-m-d H:i:s') : ' - ' }}</td>
             </tr>
             <tr>
                 <th>Fin</th>

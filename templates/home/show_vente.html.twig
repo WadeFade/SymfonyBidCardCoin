@@ -10,13 +10,18 @@
         <div class="text-center">
             <p>Dernière enchère :
                 {% if lastEnchere is not null %}
-                {{ lastEnchere }}
+                    {{ lastEnchere }}
                 {% else %}
-                {{ ' - ' }}
+                    {{ ' - ' }}
                 {% endif %}
                 €
             </p>
-            <a class="btn btn-primary" href="#">Enchérir</a>
+            {% if lastEncherisseur.id != idActualUser %}
+            <a class="btn btn-primary"
+               href="{{ path("encherir_lot", {"idLot":lot.id, "idVente":vente.id}) }}">Enchérir</a>
+            {% else %}
+                <p>Vous ne pouvez pas sur-enchérir sur votre propre enchère.</p>
+            {% endif %}
         </div>
 
         <h2 class="text-center mt-4 mb-4">Produits compris dans le lot</h2>
@@ -29,8 +34,12 @@
                         <h5 class="card-title">{{ produit.nomProduit }}</h5>
                         <p class="card-text">{{ produit.description }}</p>
                         <div class="d-flex flex-row flex-wrap">
-                            <div class="mx-2 ">Prix départ : {{ produit.prixDepart }} €</div>
-                            <div class="mx-2 ">Prix estimé : {{ infosProduit[produit.id]['estimation'] }} €</div>
+                            <div class="mx-2 ">Prix départ : {{ produit.prixDepart ? produit.prixDepart : ' - ' }}€
+                            </div>
+                            <div class="mx-2 ">Prix estimé
+                                : {{ infosProduit[produit.id]['estimation'] ? infosProduit[produit.id]['estimation'] : ' - ' }}
+                                €
+                            </div>
                         </div>
                     </div>
                 </div>
