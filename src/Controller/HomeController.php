@@ -21,7 +21,8 @@ class HomeController extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $repo = $this->getDoctrine()->getRepository(Lot::class);
 //        TODO find par date, récupérer les dates des ventes récentes(en cours) et surtout pas fini (aucune enchère adjugé ou date de fin pas passé).
-        $lots = $repo->findAll();
+//        $lots = $repo->findAll();
+        $lots = $repo->findByStartedAndNotEnded();
         $infosForLots = array();
         $numProduits = array();
 
