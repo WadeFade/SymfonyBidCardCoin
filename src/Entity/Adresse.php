@@ -45,7 +45,7 @@ class Adresse
     private $pays;
 
     /**
-     * @ORM\OneToMany(targetEntity=SalleEnchere::class, mappedBy="adresse")
+     * @ORM\OneToMany(targetEntity=Vente::class, mappedBy="adresse")
      */
     private $salleEncheres;
 
@@ -138,14 +138,14 @@ class Adresse
     }
 
     /**
-     * @return Collection|SalleEnchere[]
+     * @return Collection|Vente[]
      */
-    public function getSalleEncheres(): Collection
+    public function getVentes(): Collection
     {
         return $this->salleEncheres;
     }
 
-    public function addSalleEnchere(SalleEnchere $salleEnchere): self
+    public function addVente(Vente $salleEnchere): self
     {
         if (!$this->salleEncheres->contains($salleEnchere)) {
             $this->salleEncheres[] = $salleEnchere;
@@ -155,7 +155,7 @@ class Adresse
         return $this;
     }
 
-    public function removeSalleEnchere(SalleEnchere $salleEnchere): self
+    public function removeVente(Vente $salleEnchere): self
     {
         if ($this->salleEncheres->removeElement($salleEnchere)) {
             // set the owning side to null (unless already changed)

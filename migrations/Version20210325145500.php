@@ -20,12 +20,12 @@ final class Version20210325145500 extends AbstractMigration
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE salle_enchere ADD date_start DATETIME DEFAULT NULL, ADD date_end DATETIME DEFAULT NULL');
+        $this->addSql('ALTER TABLE vente ADD date_start DATETIME DEFAULT NULL, ADD date_end DATETIME DEFAULT NULL');
     }
 
     public function down(Schema $schema) : void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE salle_enchere DROP date_start, DROP date_end');
+        $this->addSql('ALTER TABLE vente DROP date_start, DROP date_end');
     }
 }

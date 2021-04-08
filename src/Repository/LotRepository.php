@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Enchere;
 use App\Entity\Lot;
-use App\Entity\SalleEnchere;
+use App\Entity\Vente;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -25,17 +25,17 @@ class LotRepository extends ServiceEntityRepository
         parent::__construct($registry, Lot::class);
     }
 
-     /**
-      * @return Lot[] Returns an array of Lot objects
-      */
+    /**
+     * @return QueryBuilder Returns an array of Lot objects
+     */
 //TODO fix cette fonction, pour éviter les erreurs qui viennent JSP D'Où :'(((((
     public function findByStartedAndNotEnded()
     {
-        $dateNow = (new DateTime("now"));
+        $dateNow = (new DateTime('now'));
 //        $qb = new QueryBuilder($this->_em);
         $q = $this->createQueryBuilder('l');
-        $result = $q->join(Enchere::class, 'e')
-            ->join(SalleEnchere::class, 'v')
+        $q->join(Enchere::class, 'e')
+            ->join(Vente::class, 'v')
 
 //            ->expr()->andX(
 //                 $q->expr()->gte((new DateTime("now"))->format('Y-m-d H:i:s'), 'v.dateStart'),
@@ -44,15 +44,25 @@ class LotRepository extends ServiceEntityRepository
 //                     $q->expr()->eq('v.dateEnd', 'NULL')
 //                 )
 //             )
-            ->where('v.dateStart <= CURRENT_TIMESTAMP')
+            ->where(
+                $q->expr()->andX(
+                    $q->expr()->gte(':dateNow', 'v.dateStart'),
+                    $q->expr()->orX(
+                        $q->expr()->lt(':dateNow', 'v.dateEnd'),
+                        $q->expr()->eq('v.dateEnd', 'NULL')
+                    )
+                )
+            )
+
+//            ->where('v.dateStart <= :dateNow')
             //->andWhere('(v.dateEnd > :dateNow) OR (v.dateEnd is NULL)')
-            //->setParameter('dateNow', $dateNow)
+            ->setParameter('dateNow', $dateNow)
             ->orderBy('v.dateStart', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult();
-            //var_dump($sql); exit;
-            return $result;
+
+        return $q;
     }
 //                $q->expr()->andX(
 //                $q->expr()->gte((new DateTime("now"))->format('Y-m-d H:i:s'), 'v.dateStart'),

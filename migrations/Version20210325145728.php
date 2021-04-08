@@ -20,12 +20,12 @@ final class Version20210325145728 extends AbstractMigration
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE salle_enchere CHANGE date_start date_start DATETIME DEFAULT NULL COMMENT \'(DC2Type:datetime_immutable)\', CHANGE date_end date_end DATETIME DEFAULT NULL COMMENT \'(DC2Type:datetime_immutable)\'');
+        $this->addSql('ALTER TABLE vente CHANGE date_start date_start DATETIME DEFAULT NULL COMMENT \'(DC2Type:datetime_immutable)\', CHANGE date_end date_end DATETIME DEFAULT NULL COMMENT \'(DC2Type:datetime_immutable)\'');
     }
 
     public function down(Schema $schema) : void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE salle_enchere CHANGE date_start date_start DATETIME DEFAULT NULL, CHANGE date_end date_end DATETIME DEFAULT NULL');
+        $this->addSql('ALTER TABLE vente CHANGE date_start date_start DATETIME DEFAULT NULL, CHANGE date_end date_end DATETIME DEFAULT NULL');
     }
 }

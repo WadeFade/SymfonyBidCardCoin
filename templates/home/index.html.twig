@@ -17,29 +17,31 @@
                 <div class="card mx-2 my-2" style="width: 28rem;">
                     <img src="..." class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">{{'Nom vente : ' ~ infosForLots[lot.id]['nomvente'] ~ ';  ' ~ lot.nomLot }}</h5>
+                        <h5 class="card-title">{{'Nom vente : ' ~ ';  ' ~ lot.nomLot }}</h5>
                         <p class="card-text">{{ lot.description }}</p>
-                        <p class="card-text">{{ 'Adresse : ' ~ infosForLots[lot.id]['adresse'] }}</p>
+                        <p class="card-text">{{ 'Adresse : ' }}</p>
                         <div>
                             <p>
-                                {% if infosForLots[lot.id]['estimationTotal'] > 0 %}
-                                    {{ 'Estimation total du lot : ' ~ infosForLots[lot.id]['estimationTotal'] ~ ' €' }}
-                                {% else %}
-                                    {{ 'Estimation total du lot : - €' }}
-                                {% endif %}
+{#                                {% if infosForLots[lot.id]['estimationTotal'] > 0 %}#}
+{#                                    {{ 'Estimation total du lot : ' ~ infosForLots[lot.id]['estimationTotal'] ~ ' €' }}#}
+{#                                {% else %}#}
+{#                                    {{ 'Estimation total du lot : - €' }}#}
+{#                                {% endif %}#}
+                                Estimation total du lot :
                             </p>
                             <p>
-                                {% if infosForLots[lot.id]['estimationMoyenne'] > 0 %}
-                                    {{ 'Estimation moyenne des produits : ' ~ infosForLots[lot.id]['estimationMoyenne'] ~ ' €' }}
-                                {% else %}
-                                    {{ 'Estimation moyenne des produits : - €' }}
-                                {% endif %}
+{#                                {% if infosForLots[lot.id]['estimationMoyenne'] > 0 %}#}
+{#                                    {{ 'Estimation moyenne des produits : ' ~ infosForLots[lot.id]['estimationMoyenne'] ~ ' €' }}#}
+{#                                {% else %}#}
+{#                                    {{ 'Estimation moyenne des produits : - €' }}#}
+{#                                {% endif %}#}
+                                Estimation moyenne des produits :
                             </p>
-                            <p>Commissaire : {{ infosForLots[lot.id]['commissaire'] }}</p>
+                            <p>Commissaire : </p>
                             <p>Date :
 {#                                {% if infosForLots[lot.id]['datestart'] is not null %}#}
 {#                                    {{ infosForLots[lot.id]['datestart'] }}#}
-                                    {{ infosForLots[lot.id]['datestart'] ? infosForLots[lot.id]['datestart']|date('Y-m-d H:i:s') : ' - ' }}
+{#                                    {{ infosForLots[lot.id]['datestart'] ? infosForLots[lot.id]['datestart']|date('Y-m-d H:i:s') : ' - ' }}#}
 {#                                {% else %}#}
 {#                                    {{ ' - ' }}#}
 {#                                {% endif %}#}

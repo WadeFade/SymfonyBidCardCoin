@@ -29,7 +29,7 @@ final class Version20210309121826 extends AbstractMigration
         $this->addSql('ALTER TABLE paiement DROP id_paiement');
         $this->addSql('ALTER TABLE photo DROP id_photo');
         $this->addSql('ALTER TABLE produit DROP id_produit');
-        $this->addSql('ALTER TABLE salle_enchere DROP id_salle_enchere');
+        $this->addSql('ALTER TABLE vente DROP id_salle_enchere');
         $this->addSql('ALTER TABLE stockage DROP id_stockage');
     }
 
@@ -45,7 +45,7 @@ final class Version20210309121826 extends AbstractMigration
         $this->addSql('ALTER TABLE paiement ADD id_paiement VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8mb4_unicode_ci`');
         $this->addSql('ALTER TABLE photo ADD id_photo VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8mb4_unicode_ci`');
         $this->addSql('ALTER TABLE produit ADD id_produit VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8mb4_unicode_ci`');
-        $this->addSql('ALTER TABLE salle_enchere ADD id_salle_enchere VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8mb4_unicode_ci`');
+        $this->addSql('ALTER TABLE vente ADD id_salle_enchere VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8mb4_unicode_ci`');
         $this->addSql('ALTER TABLE stockage ADD id_stockage VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8mb4_unicode_ci`');
     }
 }

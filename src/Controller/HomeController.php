@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Enchere;
 use App\Entity\Lot;
-use App\Entity\SalleEnchere;
+use App\Entity\Vente;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -20,53 +20,52 @@ class HomeController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $repo = $this->getDoctrine()->getRepository(Lot::class);
+        $lots = $repo->findAll();
 //        TODO find par date, récupérer les dates des ventes récentes(en cours) et surtout pas fini (aucune enchère adjugé ou date de fin pas passé).
-//        $lots = $repo->findAll();
-        $lots = $repo->findByStartedAndNotEnded();
+//        $lots = $repo->findByStartedAndNotEnded();
         $infosForLots = array();
         $numProduits = array();
 
 //      Pour chaque lot on récupère son adresse (lié à la vente), la date de début de la vente,
 //      ainsi que le commissaire en charge de la vente.
-        foreach ($lots as $lot) {
-            $infosForLots[$lot->getId()]['estimationTotal'] = 0;
-            $infosForLots[$lot->getId()]['estimationMoyenne'] = 0;
-            if ($lot->getEncheres()->count() > 0) {
-                $encheres = $lot->getEncheres();
-                $enchere = $encheres->last();
-                $vente = $enchere->getSalleVente();
-                $adresse = $vente->getAdresse();
-                $dateStart = $vente->getDateStart();
-                $nomVente = $vente->getNomVente();
-                $commissaire = $vente->getCommissaire();
+//        foreach ($lots as $lot) {
+//            $infosForLots[$lot->getId()]['estimationTotal'] = 0;
+//            $infosForLots[$lot->getId()]['estimationMoyenne'] = 0;
+
+//            if ($lot->getEncheres()->count() > 0) {
+//                $encheres = $lot->getEncheres();
+//                $enchere = $encheres->last();
+//                $vente = $enchere->getSalleVente();
+//                $adresse = $vente->getAdresse();
+//                $dateStart = $vente->getDateStart();
+//                $nomVente = $vente->getNomVente();
+//                $commissaire = $vente->getCommissaire();
 //                Valeurs utiles pour la vue, dans le tableau qui lui sera envoyé.
-                $infosForLots[$lot->getId()]['adresse'] = $adresse;
-                $infosForLots[$lot->getId()]['datestart'] = $dateStart;
-                $infosForLots[$lot->getId()]['commissaire'] = $commissaire;
-                $infosForLots[$lot->getId()]['nomvente'] = $nomVente;
-            }
+//                $infosForLots[$lot->getId()]['adresse'] = $adresse;
+//                $infosForLots[$lot->getId()]['datestart'] = $dateStart;
+//                $infosForLots[$lot->getId()]['commissaire'] = $commissaire;
+//                $infosForLots[$lot->getId()]['nomvente'] = $nomVente;
+//            }
 
 //          Pour chaque lot on va récupérer tous les produits lié afin de faire la somme des estimations des produits du lot
 //          ainsi qu'une moyenne des estimations des produits du lot.
-            $produits = $lot->getProduits();
-            $nbProduit = $lot->getProduits()->count();
-            $numProduits[$lot->getId()] = $nbProduit;
-            foreach ($produits as $produit) {
-                if ($produit->getEstimations()->count() > 0) {
-                    $estimations = $produit->getEstimations();
-                    $estimation = $estimations->last()->getPrixEstimation();
-                    $infosForLots[$lot->getId()]['estimationTotal'] += $estimation;
-                }
-            }
-            if ($infosForLots[$lot->getId()]['estimationTotal'] != 0 && $nbProduit > 0) {
-                $infosForLots[$lot->getId()]['estimationMoyenne'] = ($infosForLots[$lot->getId()]['estimationTotal'] / $nbProduit);
-            }
-        }
+//            $produits = $lot->getProduits();
+//            $nbProduit = $lot->getProduits()->count();
+//            $numProduits[$lot->getId()] = $nbProduit;
+//            foreach ($produits as $produit) {
+//                if ($produit->getEstimations()->count() > 0) {
+//                    $estimations = $produit->getEstimations();
+//                    $estimation = $estimations->last()->getPrixEstimation();
+//                    $infosForLots[$lot->getId()]['estimationTotal'] += $estimation;
+//                }
+//            }
+//            if ($infosForLots[$lot->getId()]['estimationTotal'] != 0 && $nbProduit > 0) {
+//                $infosForLots[$lot->getId()]['estimationMoyenne'] = ($infosForLots[$lot->getId()]['estimationTotal'] / $nbProduit);
+//            }
+//        }
 
         return $this->render('home/index.html.twig',
-            ['lots' => $lots,
-                'infosForLots' => $infosForLots,
-            ]);
+            ['lots' => $lots]);
     }
 
     /**
@@ -132,7 +131,7 @@ class HomeController extends AbstractController
 //        On récupère l'utilisateur qui va enchérir
         $user = $repo->find($this->getUser()->getId());
 //        On récupère la vente (salleenchere) sur laquelle l'enchère va être faite
-        $repoTwo = $this->getDoctrine()->getRepository(SalleEnchere::class);
+        $repoTwo = $this->getDoctrine()->getRepository(Vente::class);
         $vente = $repoTwo->find($idVente);
 //        On récupère la dernière enchère faite sur le lot.
         $lastEnchere = $vente->getEncheres()->last();

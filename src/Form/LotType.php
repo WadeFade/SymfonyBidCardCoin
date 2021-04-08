@@ -14,6 +14,7 @@ class LotType extends AbstractType
         $builder
             ->add('nomLot')
             ->add('description')
+            ->add('vente')
         ;
     }
 

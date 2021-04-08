@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\SalleEnchereRepository;
+use App\Repository\VenteRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=SalleEnchereRepository::class)
+ * @ORM\Entity(repositoryClass=VenteRepository::class)
  */
-class SalleEnchere
+class Vente
 {
     /**
      * @ORM\Id
@@ -35,11 +35,6 @@ class SalleEnchere
     private $adresse;
 
     /**
-     * @ORM\OneToMany(targetEntity=Enchere::class, mappedBy="salleVente")
-     */
-    private $encheres;
-
-    /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     private $dateStart;
@@ -53,6 +48,11 @@ class SalleEnchere
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="salleEncheres")
      */
     private $commissaire;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Lot::class, mappedBy="vente", cascade={"persist", "remove"})
+     */
+    private $lot;
 
     public function __construct()
     {
@@ -106,36 +106,6 @@ class SalleEnchere
         return $this;
     }
 
-    /**
-     * @return Collection|Enchere[]
-     */
-    public function getEncheres(): Collection
-    {
-        return $this->encheres;
-    }
-
-    public function addEnchere(Enchere $enchere): self
-    {
-        if (!$this->encheres->contains($enchere)) {
-            $this->encheres[] = $enchere;
-            $enchere->setSalleVente($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEnchere(Enchere $enchere): self
-    {
-        if ($this->encheres->removeElement($enchere)) {
-            // set the owning side to null (unless already changed)
-            if ($enchere->getSalleVente() === $this) {
-                $enchere->setSalleVente(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getDateStart(): ?\DateTimeInterface
     {
         return $this->dateStart;
@@ -168,6 +138,28 @@ class SalleEnchere
     public function setCommissaire(?User $commissaire): self
     {
         $this->commissaire = $commissaire;
+
+        return $this;
+    }
+
+    public function getLot(): ?Lot
+    {
+        return $this->lot;
+    }
+
+    public function setLot(?Lot $lot): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($lot === null && $this->lot !== null) {
+            $this->lot->setVente(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($lot !== null && $lot->getVente() !== $this) {
+            $lot->setVente($this);
+        }
+
+        $this->lot = $lot;
 
         return $this;
     }

@@ -44,6 +44,11 @@ class Lot
      */
     private $ordreAchats;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Vente::class, inversedBy="lot", cascade={"persist", "remove"})
+     */
+    private $vente;
+
     public function __construct()
     {
         $this->produits = new ArrayCollection();
@@ -171,6 +176,18 @@ class Lot
                 $ordreAchat->setLot(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getVente(): ?Vente
+    {
+        return $this->vente;
+    }
+
+    public function setVente(?Vente $vente): self
+    {
+        $this->vente = $vente;
 
         return $this;
     }

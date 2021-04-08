@@ -44,12 +44,6 @@ class Enchere
     private $ordreAchat;
 
     /**
-     * @ORM\ManyToOne(targetEntity=SalleEnchere::class, inversedBy="encheres")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $salleVente;
-
-    /**
      * @ORM\OneToOne(targetEntity=Paiement::class, mappedBy="enchere", cascade={"persist", "remove"})
      */
     private $paiement;
@@ -133,18 +127,6 @@ class Enchere
     public function setOrdreAchat(?OrdreAchat $ordreAchat): self
     {
         $this->ordreAchat = $ordreAchat;
-
-        return $this;
-    }
-
-    public function getSalleVente(): ?SalleEnchere
-    {
-        return $this->salleVente;
-    }
-
-    public function setSalleVente(?SalleEnchere $salleVente): self
-    {
-        $this->salleVente = $salleVente;
 
         return $this;
     }

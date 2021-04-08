@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\SalleEnchere;
+use App\Entity\Vente;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method SalleEnchere|null find($id, $lockMode = null, $lockVersion = null)
- * @method SalleEnchere|null findOneBy(array $criteria, array $orderBy = null)
- * @method SalleEnchere[]    findAll()
- * @method SalleEnchere[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Vente|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Vente|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Vente[]    findAll()
+ * @method Vente[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class SalleEnchereRepository extends ServiceEntityRepository
+class VenteRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, SalleEnchere::class);
+        parent::__construct($registry, Vente::class);
     }
 
     // /**
-    //  * @return SalleEnchere[] Returns an array of SalleEnchere objects
+    //  * @return Vente[] Returns an array of Vente objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class SalleEnchereRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?SalleEnchere
+    public function findOneBySomeField($value): ?Vente
     {
         return $this->createQueryBuilder('s')
             ->andWhere('s.exampleField = :val')
