@@ -8,15 +8,34 @@
         <h1 class="mb-4 mt-4 text-center">Lot n°{{ lot.id }} mis en vente : "{{ lot.nomLot }}"</h1>
         <p class="text-center">Pour la vente : "{{ lot.vente.nomVente }}"</p>
         <p class="text-center">Description du lot : {{ lot.description }}</p>
+        <p class="text-center">Estimation du lot : {{ estimationLot }} €</p>
 
         <div class="text-center">
-            <p>Dernière enchère : {{ lot.encheres.last.prixPropose ? lot.encheres.last.prixPropose : ' - ' }} €</p>
-            {% if lot.encheres.last.encherisseur.id != idActualUser %}
+
+            {% if lot.encheres.last %}
+
+                <p>Dernière enchère : {{ lot.encheres.last.prixPropose }} €</p>
+
+                {% if lot.encheres.last.encherisseur.id != idActualUser %}
+
+                    <a class="btn btn-primary"
+                       href="{{ path("encherir_lot", {"idLot":lot.id}) }}">Enchérir</a>
+
+                {% else %}
+
+                    <p>Vous ne pouvez pas sur-enchérir sur votre propre enchère.</p>
+
+                {% endif %}
+
+            {% else %}
+
+                <p>Il n'y a pas encore eu d'enchère sur cette vente.</p>
+                <p>Prix de départ : {{ prixDepart }} €</p>
                 <a class="btn btn-primary"
                    href="{{ path("encherir_lot", {"idLot":lot.id}) }}">Enchérir</a>
-            {% else %}
-                <p>Vous ne pouvez pas sur-enchérir sur votre propre enchère.</p>
+
             {% endif %}
+
         </div>
 
         <h2 class="text-center mt-4 mb-4">Produits compris dans le lot</h2>

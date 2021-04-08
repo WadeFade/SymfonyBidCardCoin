@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Enchere;
 use App\Entity\Lot;
-use App\Entity\Vente;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -52,12 +51,24 @@ class HomeController extends AbstractController
         $repo = $this->getDoctrine()->getRepository(Lot::class);
         $lot = $repo->find($id);
 
+        $estimationLot = 0;
+        $prixDepart = 0;
+        foreach ($lot->getProduits() as $produit) {
+            $prixDepart += $produit->getPrixDepart();
+            if (!is_null($produit->getEstimations())) {
+                $prixEstimation = $produit->getEstimations()->last()->getPrixEstimation();
+                $estimationLot += $prixEstimation;
+            }
+        }
+
 //        ID user actuel
         $idActualUser = $this->getUser()->getId();
 
         return $this->render('home/show_vente.html.twig', [
             'lot' => $lot,
             'idActualUser' => $idActualUser,
+            'estimationLot' => $estimationLot,
+            'prixDepart' => $prixDepart,
         ]);
     }
 
@@ -89,7 +100,17 @@ class HomeController extends AbstractController
         $newEnchere->setDateEnchere(new \DateTimeImmutable("now"));
         $newEnchere->setLot($lot);
         $newEnchere->setEncherisseur($user);
-        $newEnchere->setPrixPropose($lot->getEncheres()->last()->getPrixPropose() + $toAdd);
+
+//        S'il n'y avait pas encore d'enchère sur le lot alors la première enchère sera faite selon le prix de départ.
+        if (!$lot->getEncheres()->last()) {
+            $prixDepart = 0;
+            foreach ($lot->getProduits() as $produit) {
+                $prixDepart += $produit->getPrixDepart();
+            }
+            $newEnchere->setPrixPropose($prixDepart);
+        } else {
+            $newEnchere->setPrixPropose($lot->getEncheres()->last()->getPrixPropose() + $toAdd);
+        }
         $newEnchere->setCommissaire($lot->getVente()->getCommissaire());
         $newEnchere->setEstAdjuge(false);
 
