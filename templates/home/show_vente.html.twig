@@ -6,19 +6,14 @@
 
     <div class="container-fluid">
         <h1 class="mb-4 mt-4 text-center">Lot n°{{ lot.id }} mis en vente : "{{ lot.nomLot }}"</h1>
+        <p class="text-center">Pour la vente : "{{ lot.vente.nomVente }}"</p>
+        <p class="text-center">Description du lot : {{ lot.description }}</p>
 
         <div class="text-center">
-            <p>Dernière enchère :
-                {% if lastEnchere is not null %}
-                    {{ lastEnchere }}
-                {% else %}
-                    {{ ' - ' }}
-                {% endif %}
-                €
-            </p>
-            {% if lastEncherisseur.id != idActualUser %}
-            <a class="btn btn-primary"
-               href="{{ path("encherir_lot", {"idLot":lot.id, "idVente":vente.id}) }}">Enchérir</a>
+            <p>Dernière enchère : {{ lot.encheres.last.prixPropose ? lot.encheres.last.prixPropose : ' - ' }} €</p>
+            {% if lot.encheres.last.encherisseur.id != idActualUser %}
+                <a class="btn btn-primary"
+                   href="{{ path("encherir_lot", {"idLot":lot.id}) }}">Enchérir</a>
             {% else %}
                 <p>Vous ne pouvez pas sur-enchérir sur votre propre enchère.</p>
             {% endif %}
@@ -37,7 +32,7 @@
                             <div class="mx-2 ">Prix départ : {{ produit.prixDepart ? produit.prixDepart : ' - ' }}€
                             </div>
                             <div class="mx-2 ">Prix estimé
-                                : {{ infosProduit[produit.id]['estimation'] ? infosProduit[produit.id]['estimation'] : ' - ' }}
+                                : {{ produit.estimations.last.prixEstimation ? produit.estimations.last.prixEstimation : ' - ' }}
                                 €
                             </div>
                         </div>
