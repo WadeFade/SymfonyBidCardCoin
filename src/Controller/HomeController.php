@@ -82,7 +82,7 @@ class HomeController extends AbstractController
 //        TODO sécurité : vérifier que le lot est encore en vente
 
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-//        Valeur par défaut à ajouter à l'enchère
+
         $toAdd = 20.00;
 //        Instanciation d'un nouvel objet de type Enchere pour enchérir sur le lot actuel
         $newEnchere = new Enchere();
@@ -91,12 +91,12 @@ class HomeController extends AbstractController
         $repo = $this->getDoctrine()->getRepository(User::class);
         $user = $repo->find($this->getUser()->getId());
 
-//        On récupère le lot
+//        On récupère le lot, ce qui va nous permettre d'ajouter la nouvelle enchère
         $repoLot = $this->getDoctrine()->getRepository(Lot::class);
         $lot = $repoLot->find($idLot);
 
 
-//        On set les datas du nouvel objet de type enchere
+//        On set les data du nouvel objet de type Enchere
         $newEnchere->setDateEnchere(new \DateTimeImmutable("now"));
         $newEnchere->setLot($lot);
         $newEnchere->setEncherisseur($user);
@@ -127,9 +127,9 @@ class HomeController extends AbstractController
     /**
      * @Route("/dashboard", name="dashboard")
      */
+    //        Fonction pour la page d'administration "dashboard" qui donne accès à tous les CRUDs de l'application
     public function dashboard(): Response
     {
-//        Fonction pour la page d'administration "dashboard" qui donne accès à tous les CRUDs de l'application
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $userRoles = $this->getUser()->getRoles();
 

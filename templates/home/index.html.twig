@@ -15,7 +15,7 @@
         <div class="d-flex justify-content-center flex-wrap">
             {% for lot in lots %}
                 <div class="card mx-2 my-2" style="width: 28rem;">
-                    <img src="..." class="card-img-top" alt="...">
+                    {# <img src="..." class="card-img-top" alt="..."> #}
                     <div class="card-body">
                         <h5 class="card-title">{{ lot.vente.nomVente ~ ' --- ' ~ lot.nomLot }}</h5>
                         <p class="card-text">Description de la vente : {{ lot.vente.description }}</p>

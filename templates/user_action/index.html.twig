@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vos produits{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <h1 class="mb-4 mt-4 text-center">Les produits que vous avez proposés sur la plateforme</h1>
+        <div class="d-flex justify-content-center flex-wrap">
+            <a class="btn btn-success" href="{{ path('user_produit_new') }}">Ajouter</a>
+        </div>
+    </div>
+{% endblock %}
