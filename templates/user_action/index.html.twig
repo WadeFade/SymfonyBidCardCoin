@@ -5,8 +5,22 @@
 {% block body %}
     <div class="container-fluid">
         <h1 class="mb-4 mt-4 text-center">Les produits que vous avez proposés sur la plateforme</h1>
+        <a class="btn btn-success" href="{{ path('user_produit_new') }}">Ajouter</a>
         <div class="d-flex justify-content-center flex-wrap">
-            <a class="btn btn-success" href="{{ path('user_produit_new') }}">Ajouter</a>
+            {% for produit in produits %}
+                <div class="card mx-2 my-2" style="width: 18rem;">
+                    {# <img src="..." class="card-img-top" alt="..."> #}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ produit.nomProduit }}</h5>
+                        <p class="card-text">{{ produit.description }}</p>
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="mx-2 ">Prix départ : {{ produit.prixDepart ? produit.prixDepart : ' - ' }}€
+                            </div>
+                            <div class="mx-2 ">Vendeur : {{ produit.vendeur }}</div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}
