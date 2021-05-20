@@ -20,6 +20,14 @@ class EnchereController extends AbstractController
      */
     public function index(EnchereRepository $enchereRepository): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $userRoles = $this->getUser()->getRoles();
+
+//        Rejeter l'accès au non commissaire, non admin et non super admin
+        if (!(in_array('ROLE_SUPER_ADMIN', $userRoles) || in_array('ROLE_ADMIN', $userRoles) || in_array('ROLE_COMMISSAIRE', $userRoles))) {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        }
+
         return $this->render('enchere/index.html.twig', [
             'encheres' => $enchereRepository->findAll(),
         ]);
@@ -30,6 +38,14 @@ class EnchereController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $userRoles = $this->getUser()->getRoles();
+
+//        Rejeter l'accès au non commissaire, non admin et non super admin
+        if (!(in_array('ROLE_SUPER_ADMIN', $userRoles) || in_array('ROLE_ADMIN', $userRoles) || in_array('ROLE_COMMISSAIRE', $userRoles))) {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        }
+
         $enchere = new Enchere();
         $form = $this->createForm(EnchereType::class, $enchere);
         $form->handleRequest($request);
@@ -53,6 +69,14 @@ class EnchereController extends AbstractController
      */
     public function show(Enchere $enchere): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $userRoles = $this->getUser()->getRoles();
+
+//        Rejeter l'accès au non commissaire, non admin et non super admin
+        if (!(in_array('ROLE_SUPER_ADMIN', $userRoles) || in_array('ROLE_ADMIN', $userRoles) || in_array('ROLE_COMMISSAIRE', $userRoles))) {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        }
+
         return $this->render('enchere/show.html.twig', [
             'enchere' => $enchere,
         ]);
@@ -63,6 +87,14 @@ class EnchereController extends AbstractController
      */
     public function edit(Request $request, Enchere $enchere): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $userRoles = $this->getUser()->getRoles();
+
+//        Rejeter l'accès au non commissaire, non admin et non super admin
+        if (!(in_array('ROLE_SUPER_ADMIN', $userRoles) || in_array('ROLE_ADMIN', $userRoles) || in_array('ROLE_COMMISSAIRE', $userRoles))) {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        }
+
         $form = $this->createForm(EnchereType::class, $enchere);
         $form->handleRequest($request);
 
@@ -83,6 +115,14 @@ class EnchereController extends AbstractController
      */
     public function delete(Request $request, Enchere $enchere): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $userRoles = $this->getUser()->getRoles();
+
+//        Rejeter l'accès au non commissaire, non admin et non super admin
+        if (!(in_array('ROLE_SUPER_ADMIN', $userRoles) || in_array('ROLE_ADMIN', $userRoles) || in_array('ROLE_COMMISSAIRE', $userRoles))) {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        }
+
         if ($this->isCsrfTokenValid('delete'.$enchere->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($enchere);

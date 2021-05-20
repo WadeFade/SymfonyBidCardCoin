@@ -20,6 +20,7 @@ class ProduitController extends AbstractController
      */
     public function index(ProduitRepository $produitRepository): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 //        $product = new Produit();
 //        $product->setNomProduit('Premier produit')
 //            ->setDescription('Catégorie de mon produit produit')
@@ -39,6 +40,7 @@ class ProduitController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $produit = new Produit();
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
@@ -62,6 +64,14 @@ class ProduitController extends AbstractController
      */
     public function show(Produit $produit): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $userRoles = $this->getUser()->getRoles();
+
+//        Rejeter l'accès au non commissaire, non admin et non super admin
+        if (!(in_array('ROLE_SUPER_ADMIN', $userRoles) || in_array('ROLE_ADMIN', $userRoles) || in_array('ROLE_COMMISSAIRE', $userRoles))) {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        }
+
         return $this->render('produit/show.html.twig', [
             'produit' => $produit,
         ]);
@@ -72,6 +82,14 @@ class ProduitController extends AbstractController
      */
     public function edit(Request $request, Produit $produit): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $userRoles = $this->getUser()->getRoles();
+
+//        Rejeter l'accès au non commissaire, non admin et non super admin
+        if (!(in_array('ROLE_SUPER_ADMIN', $userRoles) || in_array('ROLE_ADMIN', $userRoles) || in_array('ROLE_COMMISSAIRE', $userRoles))) {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        }
+
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
 
@@ -92,6 +110,14 @@ class ProduitController extends AbstractController
      */
     public function delete(Request $request, Produit $produit): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $userRoles = $this->getUser()->getRoles();
+
+//        Rejeter l'accès au non commissaire, non admin et non super admin
+        if (!(in_array('ROLE_SUPER_ADMIN', $userRoles) || in_array('ROLE_ADMIN', $userRoles) || in_array('ROLE_COMMISSAIRE', $userRoles))) {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        }
+
         if ($this->isCsrfTokenValid('delete'.$produit->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($produit);

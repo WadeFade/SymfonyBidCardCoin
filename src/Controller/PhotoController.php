@@ -20,6 +20,14 @@ class PhotoController extends AbstractController
      */
     public function index(PhotoRepository $photoRepository): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $userRoles = $this->getUser()->getRoles();
+
+//        Rejeter l'accès au non commissaire, non admin et non super admin
+        if (!(in_array('ROLE_SUPER_ADMIN', $userRoles) || in_array('ROLE_ADMIN', $userRoles) || in_array('ROLE_COMMISSAIRE', $userRoles))) {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        }
+
         return $this->render('photo/index.html.twig', [
             'photos' => $photoRepository->findAll(),
         ]);
@@ -30,6 +38,14 @@ class PhotoController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $userRoles = $this->getUser()->getRoles();
+
+//        Rejeter l'accès au non commissaire, non admin et non super admin
+        if (!(in_array('ROLE_SUPER_ADMIN', $userRoles) || in_array('ROLE_ADMIN', $userRoles) || in_array('ROLE_COMMISSAIRE', $userRoles))) {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        }
+
         $photo = new Photo();
         $form = $this->createForm(PhotoType::class, $photo);
         $form->handleRequest($request);
@@ -53,6 +69,14 @@ class PhotoController extends AbstractController
      */
     public function show(Photo $photo): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $userRoles = $this->getUser()->getRoles();
+
+//        Rejeter l'accès au non commissaire, non admin et non super admin
+        if (!(in_array('ROLE_SUPER_ADMIN', $userRoles) || in_array('ROLE_ADMIN', $userRoles) || in_array('ROLE_COMMISSAIRE', $userRoles))) {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        }
+
         return $this->render('photo/show.html.twig', [
             'photo' => $photo,
         ]);
@@ -63,6 +87,14 @@ class PhotoController extends AbstractController
      */
     public function edit(Request $request, Photo $photo): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $userRoles = $this->getUser()->getRoles();
+
+//        Rejeter l'accès au non commissaire, non admin et non super admin
+        if (!(in_array('ROLE_SUPER_ADMIN', $userRoles) || in_array('ROLE_ADMIN', $userRoles) || in_array('ROLE_COMMISSAIRE', $userRoles))) {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        }
+
         $form = $this->createForm(PhotoType::class, $photo);
         $form->handleRequest($request);
 
@@ -83,6 +115,14 @@ class PhotoController extends AbstractController
      */
     public function delete(Request $request, Photo $photo): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $userRoles = $this->getUser()->getRoles();
+
+//        Rejeter l'accès au non commissaire, non admin et non super admin
+        if (!(in_array('ROLE_SUPER_ADMIN', $userRoles) || in_array('ROLE_ADMIN', $userRoles) || in_array('ROLE_COMMISSAIRE', $userRoles))) {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        }
+
         if ($this->isCsrfTokenValid('delete'.$photo->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($photo);

@@ -133,8 +133,8 @@ class HomeController extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $userRoles = $this->getUser()->getRoles();
 
-//        Rejeter l'accès au non admin et non super admin
-        if (!(in_array('ROLE_SUPER_ADMIN', $userRoles) || in_array('ROLE_ADMIN', $userRoles))) {
+//        Rejeter l'accès au non commissaire, non admin et non super admin
+        if (!(in_array('ROLE_SUPER_ADMIN', $userRoles) || in_array('ROLE_ADMIN', $userRoles) || in_array('ROLE_COMMISSAIRE', $userRoles))) {
             $this->denyAccessUnlessGranted('ROLE_ADMIN');
         }
 

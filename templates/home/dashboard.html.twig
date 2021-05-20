@@ -6,13 +6,15 @@
     <div class="container-fluid">
         <h1 class="mt-4 mb-4 text-center">Pannel d'administration de BidCardCoin</h1>
         <div class="d-flex flex-row flex-wrap">
-            <div class="card mr-4 mb-4" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Gestion User</h5>
-                    <p class="card-text">Menu de gestion pour administrer les utilisateurs.</p>
-                    <a href="{{ path('user_index') }}" class="btn btn-primary">Accéder</a>
+            {% if is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_ADMIN') %}
+                <div class="card mr-4 mb-4" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Gestion User</h5>
+                        <p class="card-text">Menu de gestion pour administrer les utilisateurs.</p>
+                        <a href="{{ path('user_index') }}" class="btn btn-primary">Accéder</a>
+                    </div>
                 </div>
-            </div>
+            {% endif %}
             <div class="card mr-4 mb-4" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title">Gestion Produit</h5>
@@ -55,13 +57,15 @@
                     <a href="{{ path('enchere_index') }}" class="btn btn-primary">Accéder</a>
                 </div>
             </div>
-            <div class="card mr-4 mb-4" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Gestion OrdreAchat</h5>
-                    <p class="card-text">Menu de gestion pour administrer les ordres d'achat.</p>
-                    <a href="{{ path('ordre_achat_index') }}" class="btn btn-primary">Accéder</a>
+            {% if is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_ADMIN') %}
+                <div class="card mr-4 mb-4" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Gestion OrdreAchat</h5>
+                        <p class="card-text">Menu de gestion pour administrer les ordres d'achat.</p>
+                        <a href="{{ path('ordre_achat_index') }}" class="btn btn-primary">Accéder</a>
+                    </div>
                 </div>
-            </div>
+            {% endif %}
             <div class="card mr-4 mb-4" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title">Gestion Stockage</h5>
@@ -69,13 +73,15 @@
                     <a href="{{ path('stockage_index') }}" class="btn btn-primary">Accéder</a>
                 </div>
             </div>
-            <div class="card mr-4 mb-4" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Gestion Paiement</h5>
-                    <p class="card-text">Menu de gestion pour administrer les paiements.</p>
-                    <a href="{{ path('paiement_index') }}" class="btn btn-primary">Accéder</a>
+            {% if is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_ADMIN') %}
+                <div class="card mr-4 mb-4" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Gestion Paiement</h5>
+                        <p class="card-text">Menu de gestion pour administrer les paiements.</p>
+                        <a href="{{ path('paiement_index') }}" class="btn btn-primary">Accéder</a>
+                    </div>
                 </div>
-            </div>
+            {% endif %}
             <div class="card mr-4 mb-4" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title">Gestion Adresse</h5>

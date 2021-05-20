@@ -18,6 +18,7 @@ class UserActionController extends AbstractController
      */
     public function index(ProduitRepository $produitRepository): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         //        On récupère l'utilisateur pour afficher ses produits.
         $repo = $this->getDoctrine()->getRepository(User::class);
         $user = $repo->find($this->getUser()->getId());
@@ -32,6 +33,7 @@ class UserActionController extends AbstractController
      */
     public function newProduct(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $produit = new Produit();
         $form = $this->createForm(ProduitUserType::class, $produit);
         $form->handleRequest($request);

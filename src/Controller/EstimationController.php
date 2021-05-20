@@ -20,6 +20,14 @@ class EstimationController extends AbstractController
      */
     public function index(EstimationRepository $estimationRepository): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $userRoles = $this->getUser()->getRoles();
+
+//        Rejeter l'accès au non commissaire, non admin et non super admin
+        if (!(in_array('ROLE_SUPER_ADMIN', $userRoles) || in_array('ROLE_ADMIN', $userRoles) || in_array('ROLE_COMMISSAIRE', $userRoles))) {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        }
+
         return $this->render('estimation/index.html.twig', [
             'estimations' => $estimationRepository->findAll(),
         ]);
@@ -30,6 +38,14 @@ class EstimationController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $userRoles = $this->getUser()->getRoles();
+
+//        Rejeter l'accès au non commissaire, non admin et non super admin
+        if (!(in_array('ROLE_SUPER_ADMIN', $userRoles) || in_array('ROLE_ADMIN', $userRoles) || in_array('ROLE_COMMISSAIRE', $userRoles))) {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        }
+
         $estimation = new Estimation();
         $form = $this->createForm(EstimationType::class, $estimation);
         $form->handleRequest($request);
@@ -53,6 +69,14 @@ class EstimationController extends AbstractController
      */
     public function show(Estimation $estimation): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $userRoles = $this->getUser()->getRoles();
+
+//        Rejeter l'accès au non commissaire, non admin et non super admin
+        if (!(in_array('ROLE_SUPER_ADMIN', $userRoles) || in_array('ROLE_ADMIN', $userRoles) || in_array('ROLE_COMMISSAIRE', $userRoles))) {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        }
+
         return $this->render('estimation/show.html.twig', [
             'estimation' => $estimation,
         ]);
@@ -63,6 +87,14 @@ class EstimationController extends AbstractController
      */
     public function edit(Request $request, Estimation $estimation): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $userRoles = $this->getUser()->getRoles();
+
+//        Rejeter l'accès au non commissaire, non admin et non super admin
+        if (!(in_array('ROLE_SUPER_ADMIN', $userRoles) || in_array('ROLE_ADMIN', $userRoles) || in_array('ROLE_COMMISSAIRE', $userRoles))) {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        }
+
         $form = $this->createForm(EstimationType::class, $estimation);
         $form->handleRequest($request);
 
@@ -83,6 +115,14 @@ class EstimationController extends AbstractController
      */
     public function delete(Request $request, Estimation $estimation): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $userRoles = $this->getUser()->getRoles();
+
+//        Rejeter l'accès au non commissaire, non admin et non super admin
+        if (!(in_array('ROLE_SUPER_ADMIN', $userRoles) || in_array('ROLE_ADMIN', $userRoles) || in_array('ROLE_COMMISSAIRE', $userRoles))) {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        }
+
         if ($this->isCsrfTokenValid('delete'.$estimation->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($estimation);
